@@ -31,4 +31,7 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::resource('/slider', 'SliderController');
     Route::get('slider/active/{id}', 'SliderController@isActive')->name('slider.active');
 
+    Route::resource('/category', 'CategoryController');
+    Route::get('category/active/{id}', 'CategoryController@isActive')->name('category.active');
+
 });
