@@ -32,6 +32,7 @@
             </td>
             <td>{{$category->getUser->name}}</td>
             <td>
+              <a href="{{ route('manager.category.edit',$category->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
               <form action='javascript:void(0)' data_url="{{route('manager.category.destroy',$category->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>
@@ -50,7 +51,6 @@
 <script>
   function myFunction(el) {
     const url = $(el).attr('data_url');
-    console.log(url);
       var token = $('meta[name="csrf-token"]').attr('content');
       swal({
         title: 'Are you sure?',

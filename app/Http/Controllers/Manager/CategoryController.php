@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
 use Auth;
+use File;
 
 class CategoryController extends Controller
 {
@@ -84,7 +85,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::find($id);
+        return view('manager.category.edit',compact('categories'));
+        
+
     }
 
     /**
@@ -96,7 +100,36 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+          'name' => 'required',
+        ]);
+        $categories= Category::find($id);
+
+        $all_data = $request->all();
+        $uppdf = $request->file('image');
+        if($uppdf != ""){
+          // $this->validate($request, [
+          //   'image' => 'required|mimes:jpeg,jpg|max:1024',
+          // ]);
+          $destinationPath = 'images/category/'.$categories->name;
+          $oldFilename = $destinationPath.$categories->image;
+
+          $extension = $uppdf->getClientOriginalExtension();
+          $fileName = md5(mt_rand()).'.'.$extension;
+          $uppdf->move($destinationPath, $fileName);
+          $file_path = $destinationPath.'/'.$fileName;
+          $all_data['image'] = $fileName;
+          if(File::exists($oldFilename)) {
+            File::delete($oldFilename);
+          }
+        }
+        $all_data['updated_by'] = Auth::user()->id;
+        $categories->update($all_data);
+        $pass = array(
+            'message' => 'Data updated successfully!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('manager.category.index')->with($pass);
     }
 
     /**
@@ -107,7 +140,19 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categories = Category::find($id);
+        if($categories->delete()){
+            $notification = array(
+              'message' => $categories->name.' is deleted successfully!',
+              'status' => 'success'
+          );
+        }else{
+            $notification = array(
+              'message' => $categories->name.' could not be deleted!',
+              'status' => 'error'
+          );
+        }
+        return Response::json($notification);
     }
 
     public function isActive(Request $request,$id)
