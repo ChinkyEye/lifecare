@@ -54,7 +54,11 @@ class LoginController extends Controller
         
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1], true)) {
             if(Auth::user()->user_type == '1'){
-                return Redirect::route('home')->with('alert-success', 'Login success! Please enjoy!!');
+                return Redirect::route('admin.home')->with('alert-success', 'Login success! Please enjoy!!');
+            }
+            elseif(Auth::user()->user_type == '2')
+            {
+                return Redirect::route('manager.home')->with('alert-success', 'Login success! Please enjoy!!');
             }
             else{
                 return Redirect::route('login')->with('alert-success', 'Login success! Please enjoy!!');

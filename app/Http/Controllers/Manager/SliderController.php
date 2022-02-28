@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\User;
+use App\Slider;
 use Auth;
 use Response;
 
-class ManagerController extends Controller
+class SliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,8 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        $users = User::where('user_type','2')
-                        ->get();
-        return view('admin.manager.index',compact('users'));
+        $sliders = Slider::get();
+        return view('manager.slider.index', compact('sliders'));
     }
 
     /**
@@ -30,7 +28,7 @@ class ManagerController extends Controller
      */
     public function create()
     {
-        return view('admin.manager.create');
+        return view('manager.slider.create');
     }
 
     /**
@@ -41,24 +39,21 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required|unique:users',
-            'email' => 'required|unique:users',
-            'phone' => 'required',
-            'password' => 'required',
-            'address' => 'required',
-            'photo' => 'mimes:jpg,jpeg,png|max:1024',
-        ]);
+        $uppdf = $request->file('image');
+        if($uppdf != ""){
+            $destinationPath = 'images/slider/'.$request->name;
+            $extension = $uppdf->getClientOriginalExtension();
+            $fileName = md5(mt_rand()).'.'.$extension;
+            $uppdf->move($destinationPath, $fileName);
+            $file_path = $destinationPath.'/'.$fileName;
 
-        $users = User::create([
+        }else{
+            $fileName = Null;
+        }
+       $sliders = Slider::create([
             'name' => $request['name'],
-            'address' => $request['address'],
-            'phone' => $request['phone'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'image'=> $fileName,
             'is_active' => '1',
-            'user_type' => '2',
             'date' => date("Y-m-d"),
             'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
             'time' => date("H:i:s"),
@@ -68,7 +63,7 @@ class ManagerController extends Controller
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
         );
-        return redirect()->route('admin.manager.index')->with($pass)->withInput();
+        return redirect()->route('manager.slider.index')->with($pass)->withInput();
     }
 
     /**
@@ -113,15 +108,15 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
-        $users = User::find($id);
-        if($users->delete()){
+        $sliders = Slider::find($id);
+        if($sliders->delete()){
             $notification = array(
-              'message' => $users->name.' is deleted successfully!',
+              'message' => $sliders->name.' is deleted successfully!',
               'status' => 'success'
           );
         }else{
             $notification = array(
-              'message' => $users->name.' could not be deleted!',
+              'message' => $sliders->name.' could not be deleted!',
               'status' => 'error'
           );
         }
@@ -130,9 +125,8 @@ class ManagerController extends Controller
 
     public function isActive(Request $request,$id)
     {
-        // dd("milan");
-        $get_is_active = User::where('id',$id)->value('is_active');
-        $isactive = User::find($id);
+        $get_is_active = Slider::where('id',$id)->value('is_active');
+        $isactive = Slider::find($id);
         if($get_is_active == 0){
         $isactive->is_active = 1;
         $notification = array(
@@ -155,4 +149,5 @@ class ManagerController extends Controller
         }
         return back()->with($notification)->withInput();
     }
+
 }

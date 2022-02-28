@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lifecare Online Pharmacy | Admin</title>
+  <title>Lifecare Online Pharmacy | Manager</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -19,19 +19,19 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper" id="app">
-    @include('admin.main.header')
-    @include('admin.main.sidebar')
+    @include('manager.main.header')
+    @include('manager.main.sidebar')
     <div class="content-wrapper">
       @yield('content')
     </div>
-    @include('admin.main.footer')
+    @include('manager.main.footer')
 
-    {{-- @include('admin.main.right-sidebar') --}}
   </div>
   <!-- ./wrapper -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   @stack('javascript')
 
 </body>

@@ -20,8 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-// Route::group(["middleware" => 'admin'], function(){
 Route::namespace('Admin')->prefix('home')->name('admin.')->middleware(['admin','auth'])->group(function(){
     Route::get('', 'HomeController@index')->name('home');
     Route::resource('/manager', 'ManagerController');
+    Route::get('manager/active/{id}', 'ManagerController@isActive')->name('manager.active');
+
+});
+Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['manager','auth'])->group(function(){
+    Route::get('', 'HomeController@index')->name('home');
+    Route::resource('/slider', 'SliderController');
+    Route::get('slider/active/{id}', 'SliderController@isActive')->name('slider.active');
+
 });
