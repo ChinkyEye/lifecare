@@ -11,6 +11,17 @@
       <a href="{{url()->previous()}}" class="nav-link">Back</a>
      
     </li>
-
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="{{ route('logout') }}"  class="nav-link bg-danger float-right"
+      onclick="event.preventDefault();
+      document.getElementById('logout-form').submit();">
+      <i class="fa fa-power-off"></i>
+      </a>
+     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+      {{ csrf_field() }}
+     </form>
+    </li>
   </ul>
 </nav>
