@@ -19,6 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::prefix('api/user')->group(function () {
+
+Route::get('slide', 'Api\SliderController@index'); //slider 
+
+});
+
+
+
+
+
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Admin')->prefix('home')->name('admin.')->middleware(['admin','auth'])->group(function(){
     Route::get('', 'HomeController@index')->name('home');
