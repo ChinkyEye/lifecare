@@ -113,7 +113,7 @@ class CategoryController extends Controller
           //   'image' => 'required|mimes:jpeg,jpg|max:1024',
           // ]);
           $destinationPath = 'images/category/'.$categories->name;
-          $oldFilename = $destinationPath.$categories->image;
+          $oldFilename = $destinationPath.'/'.$categories->image;
 
           $extension = $uppdf->getClientOriginalExtension();
           $fileName = md5(mt_rand()).'.'.$extension;
@@ -142,13 +142,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categories = Category::find($id);
-        // dd($categories);
         $destinationPath = 'images/category/'.$categories->name;
-        $oldFilename = $destinationPath.$categories->image;
-        if(File::exists($oldFilename)) {
-            File::delete($oldFilename);
-        }
+        $oldFilename = $destinationPath.'/'.$categories->image;
         if($categories->delete()){
+            if(File::exists($oldFilename)) {
+                File::delete($oldFilename);
+            }
             $notification = array(
               'message' => $categories->name.' is deleted successfully!',
               'status' => 'success'
