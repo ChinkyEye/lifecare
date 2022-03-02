@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Slider;
 use Auth;
+use File;
 use Response;
 
 class SliderController extends Controller
@@ -109,7 +110,15 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $sliders = Slider::find($id);
+
+        $destinationPath = 'images/slider/'.$sliders->name;
+        $oldFilename = $destinationPath.'/'.$sliders->image;
+
         if($sliders->delete()){
+            if(File::exists($oldFilename)) {
+                File::delete($oldFilename);
+                File::deleteDirectory($destinationPath);
+            }
             $notification = array(
               'message' => $sliders->name.' is deleted successfully!',
               'status' => 'success'
