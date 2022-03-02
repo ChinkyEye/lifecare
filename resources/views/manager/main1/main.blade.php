@@ -22,7 +22,8 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   @stack('style')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" id="main-body">
+<body class="hold-transition sidebar-mini layout-fixed">
+{{-- <body class="hold-transition sidebar-mini layout-fixed" id="main-body"> --}}
   <div class="wrapper">
     @include('manager.main.header')
     @include('manager.main.sidebar')

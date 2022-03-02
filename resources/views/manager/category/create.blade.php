@@ -43,7 +43,7 @@
             @enderror
           </div>
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label for="imgInp">Student Image</label>
           <div class="input-group">
             <img id="blah" src="{{URL::to('/')}}/image/80x80.png" onclick="document.getElementById('imgInp').click();" alt="your image" class="img-thumbnail" style="width: 175px;height: 140px"/>
@@ -51,7 +51,7 @@
              <input type='file' class="d-none" id="imgInp" name="image" />
            </div>
          </div>
-       </div>
+       </div> --}}
         
       </div>
       <div class="card-footer justify-content-between">
@@ -76,7 +76,7 @@
     readURL(this);
   });
 </script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -92,13 +92,5 @@
   $("#imgInp").change(function() {
     readURL(this);
   });
-</script>
-{{-- <script type="text/javascript">
-  $(document).ready(()=> {
-    $('#blah').on('click', () => {
-      alert('MIlan');
-        // $('.ui.modal').modal('show');
-    });
-});
 </script> --}}
 @endpush
