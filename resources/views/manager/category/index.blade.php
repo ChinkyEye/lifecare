@@ -23,7 +23,7 @@
             <td>{{$key + 1}}</td>
             <td class="text-left">{{$category->name}}</td>
             <td>
-              <img src="{{ asset('images/category/') . '/' . $category->name . '/' . $category->image }}" alt="" class="responsive" width="50">
+              <img src="{{ asset('images/category/'). '/' . $category->image }}" alt="" class="responsive" width="50">
             </td>
             <td>
               <a href="{{ route('manager.category.active',$category->id) }}" data-placement="top" title="{{ $category->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">

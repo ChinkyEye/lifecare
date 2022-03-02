@@ -42,7 +42,8 @@ class CategoryController extends Controller
     {
         $uppdf = $request->file('image');
         if($uppdf != ""){
-            $destinationPath = 'images/category/'.$request->name;
+            $destinationPath = 'images/category/';
+            // $destinationPath = 'images/category/'.$request->name;
             $extension = $uppdf->getClientOriginalExtension();
             $fileName = md5(mt_rand()).'.'.$extension;
             $uppdf->move($destinationPath, $fileName);
@@ -101,18 +102,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $uppdf = $request->file('image');
         $this->validate($request, [
           'name' => 'required',
         ]);
         $categories= Category::find($id);
 
         $all_data = $request->all();
-        $uppdf = $request->file('image');
         if($uppdf != ""){
-          // $this->validate($request, [
-          //   'image' => 'required|mimes:jpeg,jpg|max:1024',
-          // ]);
-          $destinationPath = 'images/category/'.$categories->name;
+          $this->validate($request, [
+            'image' => 'required|mimes:jpeg,jpg|max:1024',
+          ]);
+          $destinationPath = 'images/category/';
           $oldFilename = $destinationPath.'/'.$categories->image;
 
           $extension = $uppdf->getClientOriginalExtension();
@@ -142,11 +143,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categories = Category::find($id);
-        $destinationPath = 'images/category/'.$categories->name;
+        $destinationPath = 'images/category/';
         $oldFilename = $destinationPath.'/'.$categories->image;
         if($categories->delete()){
             if(File::exists($oldFilename)) {
                 File::delete($oldFilename);
+                // File::deleteDirectory($destinationPath);
             }
             $notification = array(
               'message' => $categories->name.' is deleted successfully!',
