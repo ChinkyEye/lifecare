@@ -23,7 +23,8 @@
             <td>{{$key + 1}}</td>
             <td class="text-left">{{$slider->name}}</td>
             <td>
-              <img src="{{ asset('images/slider/') . '/' . $slider->name . '/' . $slider->image }}" alt="" class="responsive" width="50">
+              <img src="{{ asset('images/slider/') . '/' . $slider->image }}" alt="" class="responsive" width="50">
+              {{-- <img src="{{ asset('images/slider/') . '/' . $slider->name . '/' . $slider->image }}" alt="" class="responsive" width="50"> --}}
             </td>
             <td>
               <a href="{{ route('manager.slider.active',$slider->id) }}" data-placement="top" title="{{ $slider->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
@@ -32,6 +33,7 @@
             </td>
             <td>{{$slider->getUser->name}}</td>
             <td>
+              <a href="{{ route('manager.slider.edit',$slider->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
               <form action='javascript:void(0)' data_url="{{route('manager.slider.destroy',$slider->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>

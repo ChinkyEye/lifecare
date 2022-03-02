@@ -32,7 +32,7 @@
             <input type="hidden" value="{{$categories->image}}">
             <div class="input-group">
               <input type="file" class="form-control d-none" id="image" name="image"  value="{{$categories->image}}" >
-              <img src="{{URL::to('/')}}/images/category/{{$categories->name}}/{{$categories->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />
+              <img src="{{URL::to('/')}}/images/category/{{$categories->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />
             </div>
             @error('image')
             <span class="text-danger font-italic" role="alert">

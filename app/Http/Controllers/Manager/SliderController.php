@@ -42,7 +42,8 @@ class SliderController extends Controller
     {
         $uppdf = $request->file('image');
         if($uppdf != ""){
-            $destinationPath = 'images/slider/'.$request->name;
+            $destinationPath = 'images/slider/';
+            // $destinationPath = 'images/slider/'.$request->name;
             $extension = $uppdf->getClientOriginalExtension();
             $fileName = md5(mt_rand()).'.'.$extension;
             $uppdf->move($destinationPath, $fileName);
@@ -86,7 +87,8 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sliders = Slider::find($id);
+        return view('manager.slider.edit',compact('sliders'));
     }
 
     /**
@@ -96,9 +98,38 @@ class SliderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Slider $slider)
     {
-        //
+        $this->validate($request, [
+          'name' => 'required',
+        ]);
+        $all_data = $request->all();
+        $uppdf = $request->file('image');
+        if($uppdf != ""){
+          $this->validate($request, [
+            'image' => 'required|mimes:jpeg,jpg|max:1024',
+          ]);
+          // $destinationPath = 'images/slider/'.$slider->name;
+          $destinationPath = 'images/slider/';
+          $oldFilename = $destinationPath.'/'.$slider->image;
+
+          $extension = $uppdf->getClientOriginalExtension();
+          $fileName = md5(mt_rand()).'.'.$extension;
+          $uppdf->move($destinationPath, $fileName);
+          $file_path = $destinationPath.'/'.$fileName;
+          $all_data['image'] = $fileName;
+          if(File::exists($oldFilename)) {
+            File::delete($oldFilename);
+          }
+        }
+        $all_data['updated_by'] = Auth::user()->id;
+        $slider->update($all_data);
+        $slider->update();
+        $pass = array(
+            'message' => 'Data updated successfully!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('manager.slider.index')->with($pass);
     }
 
     /**
@@ -111,13 +142,13 @@ class SliderController extends Controller
     {
         $sliders = Slider::find($id);
 
-        $destinationPath = 'images/slider/'.$sliders->name;
+        $destinationPath = 'images/slider/';
         $oldFilename = $destinationPath.'/'.$sliders->image;
 
         if($sliders->delete()){
             if(File::exists($oldFilename)) {
                 File::delete($oldFilename);
-                File::deleteDirectory($destinationPath);
+                // File::deleteDirectory($destinationPath);
             }
             $notification = array(
               'message' => $sliders->name.' is deleted successfully!',
