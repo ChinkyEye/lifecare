@@ -36,7 +36,7 @@
             </td>
             <td>{{$user->getUser->name}}</td>
             <td>
-              {{-- <a href="{{ route('admin.manager.edit',$user->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a> --}}
+              <a href="{{ route('admin.manager.edit',$user->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
               {{-- <form action="{{ route('admin.manager.destroy',$user->id) }}" method="post" class="d-inline-block delete-confirm" title="Permanent Delete">
                 @csrf
                 <input name="_method" type="hidden" value="DELETE">

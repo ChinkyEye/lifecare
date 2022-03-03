@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::where('created_by', Auth::user()->id)->get();
         return view('manager.category.index', compact('categories'));
     }
 

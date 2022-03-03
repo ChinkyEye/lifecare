@@ -18,7 +18,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::get();
+        $sliders = Slider::where('created_by', Auth::user()->id)->get();
         return view('manager.slider.index', compact('sliders'));
     }
 

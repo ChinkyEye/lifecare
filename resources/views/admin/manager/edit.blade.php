@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6 pl-1">
-        <h1 class="text-capitalize">Add {{ $page }}</h1>
+        <h1 class="text-capitalize">Edit {{ $page }}</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -18,12 +18,13 @@
 </section>
 <section class="content">
   <div class="card card-info">
-    <form role="form" method="POST" action="{{route('admin.manager.store')}}" class="signup" id="signup">
+    <form role="form" method="POST" action="{{route('admin.manager.update',$users->id)}}" class="signup" id="signup">
       <div class="card-body">
+        @method('PATCH')
         @csrf
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{ old('name') }}">
+          <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{$users->name}}">
           @error('name')
           <span class="text-danger font-italic" role="alert">
             <strong>{{ $message }}</strong>
@@ -32,7 +33,7 @@
         </div>
         <div class="form-group">
           <label for="name">Address</label>
-          <input type="text"  class="form-control max" id="address" placeholder="Enter address" name="address" autocomplete="off" autofocus value="{{ old('address') }}">
+          <input type="text"  class="form-control max" id="address" placeholder="Enter address" name="address" autocomplete="off" autofocus value="{{$users->address}}">
           @error('address')
           <span class="text-danger font-italic" role="alert">
             <strong>{{ $message }}</strong>
@@ -41,7 +42,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Phone</label>
-          <input type="text"  class="form-control max" id="phone" placeholder="Enter phone" name="phone" autocomplete="off" autofocus value="{{ old('phone') }}">
+          <input type="text"  class="form-control max" id="phone" placeholder="Enter phone" name="phone" autocomplete="off" autofocus value="{{$users->phone}}">
           @error('phone')
           <span class="text-danger font-italic" role="alert">
             <strong>{{ $message }}</strong>
@@ -50,35 +51,16 @@
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text"  class="form-control max" id="email" placeholder="Enter email" name="email" autocomplete="off" autofocus value="{{ old('email') }}">
+          <input type="text"  class="form-control max" id="email" placeholder="Enter email" name="email" autocomplete="off" autofocus value="{{$users->email}}">
           @error('email')
           <span class="text-danger font-italic" role="alert">
             <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="text"  class="form-control max" id="password" placeholder="Enter password" name="password" autocomplete="off" autofocus value="{{ old('email') }}">
-          @error('password')
-          <span class="text-danger font-italic" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
-        </div>
-        {{-- <div class="form-group">
-          <label for="imgInp">Student Image</label>
-          <div class="input-group">
-            <img id="blah" src="{{URL::to('/')}}/image/80x80.png" onclick="document.getElementById('imgInp').click();" alt="your image" class="img-thumbnail" style="width: 175px;height: 140px"/>
-            <div class="input-group my-3">
-             <input type='file' class="d-none" id="imgInp" name="image" />
-           </div>
-         </div>
-       </div> --}}
-        
       </div>
       <div class="card-footer justify-content-between">
-        <button type="submit" class="btn btn-info text-capitalize">Save</button>
+        <button type="submit" class="btn btn-info text-capitalize">Update Manager</button>
       </div>
     </form>
   </div>
