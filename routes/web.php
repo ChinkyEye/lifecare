@@ -43,5 +43,16 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
 
     Route::resource('/category', 'CategoryController');
     Route::get('category/active/{id}', 'CategoryController@isActive')->name('category.active');
+    
+    Route::resource('/specialist', 'SpecialistController');
+    Route::get('specialist/active/{id}', 'SpecialistController@isActive')->name('specialist.active');
+
+    Route::resource('/address', 'AddressController');
+    Route::get('address/active/{id}', 'AddressController@isActive')->name('address.active');
+
+    Route::resource('/day', 'DayController');
+    Route::get('day/active/{id}', 'DayController@isActive')->name('day.active');
+
+
 
 });

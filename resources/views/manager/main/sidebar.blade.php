@@ -25,6 +25,22 @@
       <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-item">
+          <a href="{{ route('manager.address.index')}}" class="nav-link {{ (request()->is('manager/address*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-location-dot"></i>
+            <p>
+              Address
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.day.index')}}" class="nav-link {{ (request()->is('manager/day*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>
+              Days
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ route('manager.slider.index')}}" class="nav-link {{ (request()->is('manager/slider*')) ? 'active' : '' }}">
             <i class="nav-icon fas fa-calendar-alt"></i>
             <p>
@@ -38,6 +54,14 @@
             <i class="nav-icon fas fa-calendar-alt"></i>
             <p>
               Category
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.specialist.index')}}" class="nav-link {{ (request()->is('manager/specialist*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              Specialist
             </p>
           </a>
         </li>
