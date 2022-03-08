@@ -16,12 +16,13 @@ class CreateDoctorsTable extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
+            $table->unsignedBigInteger('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->string('image')->nullable();
-            $table->string('about');
-            $table->string('experience');
+            $table->text('about');
+            $table->text('experience');
             $table->string('nmc_no');
-            $table->string('qualification');
+            $table->text('qualification');
             $table->unsignedBigInteger('specialist_id');
             $table->foreign('specialist_id')->references('id')->on('specialists'); 
             $table->unsignedBigInteger('hospital_id');
