@@ -16,7 +16,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper" id="app">
+  <div class="wrapper" id="">
     @include('admin.main.header')
     @include('admin.main.sidebar')
     <div class="content-wrapper">

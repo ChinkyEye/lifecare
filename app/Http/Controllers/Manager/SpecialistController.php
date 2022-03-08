@@ -41,6 +41,10 @@ class SpecialistController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate($request, [
+            'name' => 'required',
+            'image' => 'required'
+             ]);
         $uppdf = $request->file('image');
         if($uppdf != ""){
             $destinationPath = 'images/specialist/';

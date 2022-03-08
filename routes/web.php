@@ -36,6 +36,8 @@ Route::namespace('Admin')->prefix('home')->name('admin.')->middleware(['admin','
     Route::get('', 'HomeController@index')->name('home');
     Route::resource('/manager', 'ManagerController');
     Route::get('manager/active/{id}', 'ManagerController@isActive')->name('manager.active');
+    Route::resource('/slider', 'SliderController');
+    Route::get('slider/active/{id}', 'SliderController@isActive')->name('slider.active');
 
 });
 Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['manager','auth'])->group(function(){

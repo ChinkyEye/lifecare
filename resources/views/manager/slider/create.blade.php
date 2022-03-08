@@ -22,7 +22,7 @@
       <div class="card-body">
         @csrf
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{ old('name') }}">
           @error('name')
           <span class="text-danger font-italic" role="alert">
@@ -32,7 +32,7 @@
         </div>
        
         <div class="form-group">
-          <label for="image">Choose Slider</label>
+          <label for="image">Choose Slider<span class="text-danger">*</span></label>
           <div class="input-group">
             <input type="file" class="form-control d-none" id="image" name="image" value="{{ old('image') }}">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl1xtOkMGh312RKiJXUPbwyODQ7hdHgHFqYR5RwBGHiKaKz9eO&s" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />

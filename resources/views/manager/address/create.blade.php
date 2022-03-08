@@ -22,7 +22,7 @@
       <div class="card-body">
         @csrf
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{ old('name') }}">
           @error('name')
           <span class="text-danger font-italic" role="alert">
