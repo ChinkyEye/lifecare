@@ -58,5 +58,6 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::resource('/hospital','HospitalController');
     Route::get('hospital/active/{id}', 'HospitalController@isActive')->name('hospital.active');
 
+    Route::resource('/doctor','DoctorController');
 
 });

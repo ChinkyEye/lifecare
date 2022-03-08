@@ -73,6 +73,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.doctor.index')}}" class="nav-link {{ (request()->is('manager/doctor*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user-md"></i>
+            <p>
+              Doctor
+            </p>
+          </a>
+        </li>
         
       </ul>
     </nav>
