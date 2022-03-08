@@ -17,7 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['reset' => false,
+            'register' => false
+            ]);
 
 Route::prefix('api/user')->group(function () {
 
@@ -53,6 +55,8 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::resource('/day', 'DayController');
     Route::get('day/active/{id}', 'DayController@isActive')->name('day.active');
 
+    Route::resource('/hospital','HospitalController');
+    Route::get('hospital/active/{id}', 'HospitalController@isActive')->name('hospital.active');
 
 
 });

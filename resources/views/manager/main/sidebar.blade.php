@@ -65,6 +65,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.hospital.index')}}" class="nav-link {{ (request()->is('manager/hospital*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-house-medical"></i>
+            <p>
+              Hospital
+            </p>
+          </a>
+        </li>
         
       </ul>
     </nav>
