@@ -130,10 +130,10 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $this->validate($request, [
+        $this->validate($request, [
           'name' => 'required',
           'address_id' => 'required',
-          'image' => 'required',
+          // 'image' => 'required',
           'about' => 'required',
           'specialist_id' => 'required',
           'hospital_id' => 'required',
