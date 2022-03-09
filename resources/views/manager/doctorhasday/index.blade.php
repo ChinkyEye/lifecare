@@ -1,45 +1,56 @@
 @extends('manager.main.main')
 @section('content')
 <?php $page = substr((Route::currentRouteName()), 8, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
-<section class="content-header"></section>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 pl-1">
+        <h3 class="text-capitalize">Dr.<small> {{$doctors->name}}</small></h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{{route('manager.home')}}">Home</a></li>
+          <li class="breadcrumb-item active text-capitalize">Doctor's schedule Page</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="content">
-  <a href="{{ route('manager.doctorhasday.create')}}" class="btn btn-sm btn-info text-capitalize rounded-0">Add {{ $page }} </a>
+  <a href="{{ route('manager.doctorhasday.create',$doctors->id)}}" class="btn btn-sm btn-info text-capitalize rounded-0">Add Doctor's Schedule </a>
   <div class="card">
     <div class="table-responsive">
       <table class="table table-bordered table-hover m-0 w-100 table-sm">
         <thead class="bg-dark">
           <tr class="text-center">
             <th width="10">SN</th>
-            <th class="text-left">Doctor Name</th>
-            {{-- <th>Address</th> --}}
-            {{-- <th>Status</th> --}}
-            {{-- <th>Created By</th> --}}
-            <th>Action</th>
+            <th class="text-left">Working Days</th>
+            <th>Available Time</th>
+            <th>Status</th>
           </tr>
         </thead> 
         <tbody>
-         {{--  @foreach($doctors as $key => $doctor)
+          @foreach($datas as $key => $data)
           <tr class="text-center">
             <td>{{$key + 1}}</td>
-            <td class="text-left">{{$doctor->name}}</td>
-            <td>{{$doctor->getDoctorAddress->name}}</td>
+            <td class="text-left">{{$data->getDayName->name}}</td>
             <td>
-              <a href="{{ route('manager.doctor.active',$doctor->id) }}" data-placement="top" title="{{ $doctor->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
-                <i class="nav-icon fas {{ $doctor->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
-              </a>
-            </td>
-            <td>{{$doctor->getUser->name}}</td>
-            <td>
-              <a href="{{ route('manager.doctor.edit',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
-              <a href="{{ route('manager.doctor.edit',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-plus"></i></a>
-              <form action='javascript:void(0)' data_url="{{route('manager.doctor.destroy',$doctor->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
+              @foreach($data->getDoctorDayTime as $key => $daytime)
+              {{$daytime->from_time}} - {{$daytime->to_time}}
+
+              <form action='javascript:void(0)' data_url="{{route('manager.doctorhasdaytime.destroy',$daytime->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>
-                <button class='btn btn-xs btn-outline-danger' type='submit' ><i class='fa fa-trash'></i></button>
-              </form>
+                <button class='btn btn-xs btn-outline-danger' type='submit' ><i class="fas fa-times text-danger"></i></a></button>
+              </form>  ,
+              {{-- <a href="javascript:void(0)" title="Click to Cancel Booking" onclick="myFunction({{$daytime->id}})"><i class="fas fa-times text-danger"></i></a>, --}}
+              @endforeach
+            </td>
+            <td>
+              
             </td>
           </tr>
-          @endforeach --}}
+          @endforeach
         </tbody>             
       </table>
     </div>
@@ -49,8 +60,8 @@
 @push('javascript')
 <script>
   function myFunction(el) {
+    // alert(el);
     const url = $(el).attr('data_url');
-    console.log(url);
       var token = $('meta[name="csrf-token"]').attr('content');
       swal({
         title: 'Are you sure?',
@@ -62,7 +73,7 @@
       }).then(function(value) {
         if(value == true){
           $.ajax({
-            url: url,
+            url: url,         
             type: "POST",
             data: {
               _token: token,

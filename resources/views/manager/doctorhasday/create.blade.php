@@ -1,16 +1,19 @@
 @extends('manager.main.main')
+@push('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+@endpush
 @section('content')
 <?php $page = substr((Route::currentRouteName()), 8, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6 pl-1">
-        <h1 class="text-capitalize">Add {{ $page }}</h1>
+        <h3 class="text-capitalize">Dr.<small> {{$doctors->name}}</small></h3>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{route('manager.home')}}">Home</a></li>
-          <li class="breadcrumb-item active text-capitalize">{{ $page }} Page</li>
+          <li class="breadcrumb-item active text-capitalize">Doctor's schedule Page</li>
         </ol>
       </div>
     </div>
@@ -18,67 +21,59 @@
 </section>
 <section class="content">
   <div class="card card-info">
-    <form role="form" method="POST" action="{{route('manager.doctor.store')}}" enctype="multipart/form-data">
+    <form role="form" method="POST" action="{{route('manager.doctorhasday.store')}}">
       <div class="card-body">
         @csrf
+        <input type="hidden" name="doctor_id" id="doctor_id" value="{{$doctors->id}}">
         <div class="form-group">
-          <label for="name">Doctor Name<span class="text-danger">*</span></label>
-          <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{ old('name') }}">
-          @error('name')
-          <span class="text-danger font-italic" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
-        </div>
-
-        <div class="form-group">
-          <label for="address_id" class="control-label">Address <span class="text-danger">*</span></label>
-          <select class="form-control" name="address_id" id="address_id">
+          <label for="day_id" class="control-label">Day <span class="text-danger">*</span></label>
+          <select class="form-control" name="day_id" id="day_id">
             <option value="">Select Day</option>
-            @foreach ($hospitals as $key => $hospital)
-            <option value="{{ $hospital->id }}" {{ old('hospital_id') == $hospital->id ? 'selected' : ''}}>
-              {{$hospital->name}}
+            @foreach ($days as $key => $day)
+            <option value="{{ $day->id }}" {{ old('hospital_id') == $day->id ? 'selected' : ''}}>
+              {{$day->name}}
             </option>
             @endforeach
           </select>
-          @error('address_id')
+          @error('day_id')
           <span class="text-danger font-italic" role="alert">
             <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
-
-        <div class="form-group">
-          <label for="specialist_id" class="control-label">Specialist <span class="text-danger">*</span></label>
-          <select class="form-control" name="specialist_id" id="specialist_id">
-            <option value="">Select Your Specialist</option>
-            @foreach ($specialists as $key => $specialist)
-            <option value="{{ $specialist->id }}" {{ old('specialist_id') == $specialist->id ? 'selected' : ''}}>
-              {{$specialist->name}}
-            </option>
-            @endforeach
-          </select>
-          @error('specialist_id')
-          <span class="text-danger font-italic" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
-        </div>
-        <div class="form-group">
-          <label for="hospital_id" class="control-label">Hospital<span class="text-danger">*</span></label>
-          <select class="form-control" name="hospital_id" id="hospital_id">
-            <option value="">Select Your Hospital</option>
-            @foreach ($hospitals as $key => $hospital)
-            <option value="{{ $hospital->id }}" {{ old('hospital_id') == $hospital->id ? 'selected' : ''}}>
-              {{$hospital->name}}
-            </option>
-            @endforeach
-          </select>
-          @error('hospital_id')
-          <span class="text-danger font-italic" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
+        <div class="row">
+          <div class="bootstrap-timepicker col-md-6">
+            <div class="form-group">
+              <label for="from_time">From Time:</label>
+              <div class="input-group date" id="from_time" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#from_time" name="from_time" value="{{ old('from_time') }}">
+                <div class="input-group-append" data-target="#from_time" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="far fa-clock"></i></div>
+                </div>
+              </div>
+              @error('from_time')
+              <span class="text-danger font-italic" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+          </div>
+          <div class="bootstrap-timepicker col-md-6">
+            <div class="form-group">
+              <label for="to_time">To Time:</label>
+              <div class="input-group date" id="to_time" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time" value="{{ old('to_time') }}">
+                <div class="input-group-append" data-target="#to_time" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="far fa-clock"></i></div>
+                </div>
+              </div>
+              @error('to_time')
+              <span class="text-danger font-italic" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+          </div>
         </div>
       </div>
       <div class="card-footer justify-content-between">
@@ -90,6 +85,8 @@
 @endsection
 @push('javascript')
 <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
 <script type="text/javascript">
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -103,5 +100,16 @@
   $("#image").change(function(){
     readURL(this);
   });
+</script>
+
+<script>
+    $('#from_time').datetimepicker({
+      format: 'LT'
+    })
+</script>
+<script>
+    $('#to_time').datetimepicker({
+      format: 'LT'
+    })
 </script>
 @endpush
