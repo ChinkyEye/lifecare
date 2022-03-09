@@ -85,11 +85,12 @@ class DoctorController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
-          'message' => 'Data added successfully!',
-          'alert-type' => 'success'
-        );
-        return redirect()->route('manager.doctor.index')->with($pass)->withInput();
+        // $pass = array(
+        //   'message' => 'Data added successfully!',
+        //   'alert-type' => 'success'
+        // );
+        // return redirect()->route('manager.doctor.index')->with($pass)->withInput();
+        return redirect()->route('manager.doctor.index')->with('success', 'Doctor added successfully.');
     }
 
     /**

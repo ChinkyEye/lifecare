@@ -60,7 +60,8 @@ class HospitalController extends Controller
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
         );
-        return redirect()->route('manager.hospital.index')->with($pass)->withInput();
+        // return redirect()->route('manager.hospital.index')->with($pass);
+        return redirect()->route('manager.hospital.index')->with('success', 'Hospital created successfully.');
     }
 
     /**
@@ -107,7 +108,7 @@ class HospitalController extends Controller
             'message' => 'Data updated successfully!',
             'alert-type' => 'success'
         );
-        return redirect()->route('manager.hospital.index')->with($pass);
+        return redirect()->route('manager.hospital.index')->with('success', 'Data updated successfully.');
     }
 
     /**
