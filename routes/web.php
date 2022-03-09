@@ -68,6 +68,8 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::get('/doctor/doctorhasday/create/{id}','DoctorHasDayController@create')->name('doctorhasday.create');
 
     Route::resource('/doctorhasdaytime','DoctorHasDayTimeController');
+    Route::get('/doctor/doctorhasdaytime/{id}','DoctorHasDayTimeController@index')->name('doctorhasdaytime.index');
+
 
 
 });

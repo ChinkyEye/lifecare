@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DoctorHasDayTime;
+use App\DoctorHasDay;
+use App\Doctor;
 use Response;
 
 class DoctorHasDayTimeController extends Controller
@@ -14,9 +16,12 @@ class DoctorHasDayTimeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request,$id)
     {
-        //
+        $doctor_id = DoctorHasDay::where('id',$id)->value('doctor_id');
+        $doctors = Doctor::find($doctor_id);
+        $doctorhasdaytime = DoctorHasDayTime::where('doctor_has_day_id',$id)->get();
+        return view('manager.doctorhasdaytime.index', compact('doctors','doctorhasdaytime'));
     }
 
     /**

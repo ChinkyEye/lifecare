@@ -47,8 +47,9 @@
               @endforeach
             </td>
             <td>
-              
-            </td>
+              <a href="{{ route('manager.doctorhasday.edit',$data->id) }}" class="btn btn-xs btn-outline-info" title="Edit Day"><i class="fas fa-edit"></i></a>
+              <a href="{{ route('manager.doctorhasdaytime.index',$data->id) }}" class="btn btn-xs btn-outline-info" title="Change Time Period"><i class="fa-solid fa-clock"></i></a>
+            </td> 
           </tr>
           @endforeach
         </tbody>             

@@ -113,7 +113,12 @@ class DoctorHasDayController extends Controller
      */
     public function edit($id)
     {
-        //
+        $doctor_id = DoctorHasDay::where('id',$id)->value('doctor_id');
+        $doctors = Doctor::find($doctor_id);
+        $days = Day::where('created_by',Auth::user()->id)->get();
+        $doctorhasdays = DoctorHasDay::find($id);
+        return view('manager.doctorhasday.edit', compact('doctors','days','doctorhasdays'));
+
     }
 
     /**
@@ -125,7 +130,11 @@ class DoctorHasDayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $doctorhasday = DoctorHasDay::find($id);
+        $all_data = $request->all();
+        $all_data['updated_by'] = Auth::user()->id;
+        $doctorhasday->update($all_data);
+        return redirect()->route('manager.doctorhasday.index',$request->doctor_id)->with('success','Data Updated Successfully');
     }
 
     /**
