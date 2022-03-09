@@ -32,7 +32,7 @@
             <div class="input-group">
               <input type="file" class="form-control d-none" id="image" name="image"  value="{{$sliders->image}}" >
               <img src="{{URL::to('/')}}/images/slider/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />
-              {{-- <img src="{{URL::to('/')}}/images/slider/{{$sliders->name}}/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  /> --}}
+              <!-- <img src="{{URL::to('/')}}/images/slider/{{$sliders->name}}/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  /> -->
             </div>
             @error('image')
             <span class="text-danger font-italic" role="alert">

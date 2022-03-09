@@ -9,6 +9,8 @@ use App\Hospital;
 use App\Specialist;
 use App\Doctor;
 use Auth;
+use Response;
+use File;
 
 class DoctorController extends Controller
 {
@@ -51,7 +53,7 @@ class DoctorController extends Controller
           'name' => 'required',
           'address_id' => 'required',
           'image' => 'required',
-          // 'about' => 'required',
+          'about' => 'required',
           'specialist_id' => 'required',
           'hospital_id' => 'required',
           'experience' => 'required',
@@ -111,7 +113,11 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $doctors = Doctor::find($id);
+        $addresses = Address::all();
+        $specialists = Specialist::all();
+        $hospitals = Hospital::all();
+        return view('manager.doctor.edit',compact('doctors','addresses','specialists', 'hospitals'));
     }
 
     /**
@@ -123,7 +129,37 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $this->validate($request, [
+          'name' => 'required',
+          'address_id' => 'required',
+          'image' => 'required',
+          'about' => 'required',
+          'specialist_id' => 'required',
+          'hospital_id' => 'required',
+          'experience' => 'required',
+          'nmc_no' => 'required',
+          'qualification' => 'required',
+        ]);
+        $uppdf = $request->file('image');
+        if($uppdf != ""){
+            $destinationPath = 'images/doctor/';
+            $extension = $uppdf->getClientOriginalExtension();
+            $fileName = md5(mt_rand()).'.'.$extension;
+            $uppdf->move($destinationPath, $fileName);
+            $file_path = $destinationPath.'/'.$fileName;
+
+        }else{
+            $fileName = Null;
+        }
+       $doctors = Doctor::find($id);
+        $all_data = $request->all();
+        $all_data['updated_by'] = Auth::user()->id;
+        $doctors->update($all_data);
+        $pass = array(
+            'message' => 'Data updated successfully!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('manager.doctor.index')->with($pass);
     }
 
     /**
@@ -134,6 +170,50 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $doctors = Doctor::find($id);
+        $destinationPath = 'images/doctor/';
+        $oldFilename = $destinationPath.'/'.$doctors->image;
+        if($doctors->delete()){
+            if(File::exists($oldFilename)) {
+                File::delete($oldFilename);
+                // File::deleteDirectory($destinationPath);
+            }
+            $notification = array(
+              'message' => $doctors->name.' is deleted successfully!',
+              'status' => 'success'
+          );
+        }else{
+            $notification = array(
+              'message' => $doctors->name.' could not be deleted!',
+              'status' => 'error'
+          );
+        }
+        return Response::json($notification);
+    }
+     public function isActive(Request $request,$id)
+    {
+        $get_is_active = Doctor::where('id',$id)->value('is_active');
+        $isactive = Doctor::find($id);
+        if($get_is_active == 0){
+        $isactive->is_active = 1;
+        $notification = array(
+          'message' => $isactive->name.' is Active!',
+          'alert-type' => 'success'
+        );
+        }
+        else {
+        $isactive->is_active = 0;
+        $notification = array(
+          'message' => $isactive->name.' is inactive!',
+          'alert-type' => 'error'
+        );
+        }
+        if(!($isactive->update())){
+        $notification = array(
+          'message' => $isactive->name.' could not be changed!',
+          'alert-type' => 'error'
+        );
+        }
+        return back()->with($notification)->withInput();
     }
 }

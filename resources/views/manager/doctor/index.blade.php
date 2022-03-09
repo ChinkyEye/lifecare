@@ -24,9 +24,9 @@
             <td class="text-left">{{$doctor->name}}</td>
             <td>{{$doctor->getDoctorAddress->name}}</td>
             <td>
-             {{--  <a href="{{ route('manager.doctor.active',$doctor->id) }}" data-placement="top" title="{{ $doctor->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
+           <a href="{{ route('manager.doctor.active',$doctor->id) }}" data-placement="top" title="{{ $doctor->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
                 <i class="nav-icon fas {{ $doctor->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
-              </a> --}}
+              </a>
             </td>
             <td>{{$doctor->getUser->name}}</td>
             <td>
