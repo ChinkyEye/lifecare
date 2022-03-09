@@ -8,6 +8,7 @@ use App\DoctorHasDayTime;
 use App\DoctorHasDay;
 use App\Doctor;
 use Response;
+use Auth;
 
 class DoctorHasDayTimeController extends Controller
 {
@@ -64,7 +65,12 @@ class DoctorHasDayTimeController extends Controller
      */
     public function edit($id)
     {
-        //
+        // dd($id);
+        $doctorhasday_id = DoctorHasDayTime::where('id',$id)->value('doctor_has_day_id');
+        $doctor_id = DoctorHasDay::where('id',$doctorhasday_id)->value('doctor_id');
+        $doctors = Doctor::find($doctor_id);
+        $doctorhasdaytime = DoctorHasDayTime::find($id);
+        return view('manager.doctorhasdaytime.edit', compact('doctors','doctorhasdaytime','doctorhasday_id'));
     }
 
     /**
@@ -76,7 +82,12 @@ class DoctorHasDayTimeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request,$id);
+        $doctorhasdaytime = DoctorHasDayTime::find($id);
+        $all_data = $request->all();
+        $all_data['updated_by'] = Auth::user()->id;
+        $doctorhasdaytime->update($all_data);
+        return redirect()->route('manager.doctorhasdaytime.index',$request->doctorhasday_id)->with('success','Data Updated Successfully');
     }
 
     /**

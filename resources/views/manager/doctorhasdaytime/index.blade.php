@@ -36,7 +36,12 @@
             <td>{{$key + 1}}</td>
             <td>{{$data->from_time}} - {{$data->to_time}}</td>
             <td>
-              
+              <a href="{{ route('manager.doctorhasdaytime.edit',$data->id) }}" class="btn btn-xs btn-outline-info" title="Change Time Period"><i class="fa-solid fa-edit"></i></a>
+              <form action='javascript:void(0)' data_url="{{route('manager.doctorhasdaytime.destroy',$data->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
+                <input type='hidden' name='_token' value='".csrf_token()."'>
+                <input name='_method' type='hidden' value='DELETE'>
+                <button class='btn btn-xs btn-outline-danger' type='submit' ><i class='fa fa-trash'></i></a></button>
+              </form> 
             </td>
           </tr>
           @endforeach
@@ -74,5 +79,57 @@
     $('#to_time').datetimepicker({
       format: 'LT'
     })
+</script>
+<script>
+  function myFunction(el) {
+    // alert(el);
+    const url = $(el).attr('data_url');
+      var token = $('meta[name="csrf-token"]').attr('content');
+      swal({
+        title: 'Are you sure?',
+        text: 'This record and it`s details will be permanantly deleted!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+        dangerMode: true,
+        closeOnClickOutside: false,
+      }).then(function(value) {
+        if(value == true){
+          $.ajax({
+            url: url,         
+            type: "POST",
+            data: {
+              _token: token,
+              '_method': 'DELETE',
+            },
+            success: function (data) {
+              swal({
+                title: "Success!",
+                type: "success",
+                text: "Click OK",
+                icon: "success",
+                showConfirmButton: false,
+              }).then(location.reload(true));
+              
+            },
+            error: function (data) {
+              swal({
+                title: 'Opps...',
+                text: "Please refresh your page",
+                type: 'error',
+                timer: '1500'
+              });
+            }
+          });
+        }else{
+          swal({
+            title: 'Cancel',
+            text: "Data is safe.",
+            icon: "success",
+            type: 'info',
+            timer: '1500'
+          });
+        }
+      });
+  }
 </script>
 @endpush

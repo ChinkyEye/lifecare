@@ -31,7 +31,7 @@
             <td>{{$doctor->getUser->name}}</td>
             <td>
               <a href="{{ route('manager.doctor.edit',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
-              <a href="{{ route('manager.doctorhasday.index',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Add Doctor Schedule"><i class="fas fa-plus"></i></a>
+              <a href="{{ route('manager.doctorhasday.index',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Add Doctor Schedule">{{-- <i class="fas fa-plus"></i> --}}<i class="fa-solid fa-calendar-plus"></i></a>
               <form action='javascript:void(0)' data_url="{{route('manager.doctor.destroy',$doctor->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>
