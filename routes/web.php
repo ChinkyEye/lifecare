@@ -61,11 +61,9 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::get('hospital/active/{id}', 'HospitalController@isActive')->name('hospital.active');
 
     Route::resource('/doctor','DoctorController');
-<<<<<<< HEAD
     Route::get('/doctor/doctorhasday/{id}','DoctorHasDayController@index')->name('doctorhasday.index');
+    
     Route::resource('/doctorhasday','DoctorHasDayController');
-=======
     Route::get('doctor/active/{id}', 'DoctorController@isActive')->name('doctor.active');
->>>>>>> origin/master
 
 });
