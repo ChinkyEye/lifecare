@@ -44,7 +44,7 @@
         <div class="row">
           <div class="bootstrap-timepicker col-md-6">
             <div class="form-group">
-              <label for="from_time">From Time:</label>
+              <label for="from_time">From Time:<span class="text-danger">*</span></label>
               <div class="input-group date" id="from_time" data-target-input="nearest">
                 <input type="text" class="form-control datetimepicker-input" data-target="#from_time" name="from_time" value="{{ old('from_time') }}">
                 <div class="input-group-append" data-target="#from_time" data-toggle="datetimepicker">
@@ -60,7 +60,7 @@
           </div>
           <div class="bootstrap-timepicker col-md-6">
             <div class="form-group">
-              <label for="to_time">To Time:</label>
+              <label for="to_time">To Time:<span class="text-danger">*</span></label>
               <div class="input-group date" id="to_time" data-target-input="nearest">
                 <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time" value="{{ old('to_time') }}">
                 <div class="input-group-append" data-target="#to_time" data-toggle="datetimepicker">

@@ -49,6 +49,8 @@ class DoctorHasDayController extends Controller
     {
         $this->validate($request, [
           'day_id' => 'required',
+          'from_time' => 'required',
+          'to_time' => 'required',
         ]);
         $counts = DoctorHasDay::where('doctor_id',$request->doctor_id)
                                 ->where('day_id',$request->day_id)
