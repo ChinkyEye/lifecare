@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6 pl-1">
-        <h1 class="text-capitalize">Add {{ $page }}</h1>
+        <h1 class="text-capitalize">Edit {{ $page }}</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -81,7 +81,7 @@
           @enderror
         </div>
         <div class="form-group">
-          <label for="about">About</label>
+          <label for="about">About<span class="text-danger">*</span></label>
           <textarea class="form-control" id="about" name="about" rows="3" placeholder="Write something here..." value="{{old('about')}}">{{$doctors->about}}</textarea>
           {{-- <input type="text"  class="form-control max" id="about" placeholder="Enter description" name="about" autocomplete="off" autofocus value="{{ old('about') }}" value="{{$doctors->about}}"> --}}
           @error('about')

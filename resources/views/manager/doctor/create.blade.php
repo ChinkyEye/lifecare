@@ -79,7 +79,7 @@
           @enderror
         </div>
         <div class="form-group">
-          <label for="about">About</label>
+          <label for="about">About<span class="text-danger">*</span></label>
           <textarea class="form-control" id="about" name="about" rows="3" placeholder="Write something here..." value="{{old('about')}}"></textarea>
           {{-- <input type="text"  class="form-control max" id="about" placeholder="Enter description" name="about" autocomplete="off" autofocus value="{{ old('about') }}"> --}}
           @error('about')
