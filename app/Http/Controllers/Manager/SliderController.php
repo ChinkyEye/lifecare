@@ -40,6 +40,11 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate($request, [
+            'name' => 'required',
+            'image' => 'required'
+             ]);
+         
         $uppdf = $request->file('image');
         if($uppdf != ""){
             $destinationPath = 'images/slider/';
@@ -65,7 +70,7 @@ class SliderController extends Controller
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
         );
-        return redirect()->route('manager.slider.index')->with($pass)->withInput();
+        return redirect()->route('admin.slider.index')->with($pass)->withInput();
     }
 
     /**

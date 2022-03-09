@@ -36,6 +36,8 @@ Route::namespace('Admin')->prefix('home')->name('admin.')->middleware(['admin','
     Route::get('', 'HomeController@index')->name('home');
     Route::resource('/manager', 'ManagerController');
     Route::get('manager/active/{id}', 'ManagerController@isActive')->name('manager.active');
+    Route::resource('/slider', 'SliderController');
+    Route::get('slider/active/{id}', 'SliderController@isActive')->name('slider.active');
 
 });
 Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['manager','auth'])->group(function(){
@@ -59,7 +61,11 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::get('hospital/active/{id}', 'HospitalController@isActive')->name('hospital.active');
 
     Route::resource('/doctor','DoctorController');
+<<<<<<< HEAD
     Route::get('/doctor/doctorhasday/{id}','DoctorHasDayController@index')->name('doctorhasday.index');
     Route::resource('/doctorhasday','DoctorHasDayController');
+=======
+    Route::get('doctor/active/{id}', 'DoctorController@isActive')->name('doctor.active');
+>>>>>>> origin/master
 
 });

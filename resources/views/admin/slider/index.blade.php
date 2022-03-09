@@ -1,38 +1,40 @@
-@extends('manager.main.main')
+@extends('admin.main.main')
 @section('content')
-<?php $page = substr((Route::currentRouteName()), 8, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
+<?php $page = substr((Route::currentRouteName()), 6, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
 <section class="content-header"></section>
 <section class="content">
-  <a href="{{ route('manager.doctor.create')}}" class="btn btn-sm btn-info text-capitalize rounded-0">Add {{ $page }} </a>
+  <a href="{{ route('admin.slider.create')}}" class="btn btn-sm btn-info text-capitalize rounded-0">Add {{ $page }} </a>
   <div class="card">
     <div class="table-responsive">
       <table class="table table-bordered table-hover m-0 w-100 table-sm">
         <thead class="bg-dark">
           <tr class="text-center">
             <th width="10">SN</th>
-            <th class="text-left">Doctor Name</th>
-            <th>Address</th>
-            <th>Status</th>
-            <th>Created By</th>
-            <th>Action</th>
+            <th class="text-left">Name</th>
+            <th>Image</th>
+            <th width="10">Status</th>
+            <th width="150">Created By</th>
+            <th width="100">Action</th>
           </tr>
         </thead> 
         <tbody>
-          @foreach($doctors as $key => $doctor)
+          @foreach($sliders as $key => $slider)
           <tr class="text-center">
             <td>{{$key + 1}}</td>
-            <td class="text-left">{{$doctor->name}}</td>
-            <td>{{$doctor->getDoctorAddress->name}}</td>
+            <td class="text-left">{{$slider->name}}</td>
             <td>
-           <a href="{{ route('manager.doctor.active',$doctor->id) }}" data-placement="top" title="{{ $doctor->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
-                <i class="nav-icon fas {{ $doctor->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
+              <img src="{{ asset('images/slider/') . '/' . $slider->image }}" alt="" class="responsive" width="50">
+              {{-- <img src="{{ asset('images/slider/') . '/' . $slider->name . '/' . $slider->image }}" alt="" class="responsive" width="50"> --}}
+            </td>
+            <td>
+              <a href="{{ route('admin.slider.active',$slider->id) }}" data-placement="top" title="{{ $slider->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
+                <i class="nav-icon fas {{ $slider->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
               </a>
             </td>
-            <td>{{$doctor->getUser->name}}</td>
+            <td>{{$slider->getUser->name}}</td>
             <td>
-              <a href="{{ route('manager.doctor.edit',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
-              <a href="{{ route('manager.doctorhasday.index',$doctor->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-plus"></i></a>
-              <form action='javascript:void(0)' data_url="{{route('manager.doctor.destroy',$doctor->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
+              <a href="{{ route('admin.slider.edit',$slider->id) }}" class="btn btn-xs btn-outline-info" title="Update"><i class="fas fa-edit"></i></a>
+              <form action='javascript:void(0)' data_url="{{route('admin.slider.destroy',$slider->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>
                 <button class='btn btn-xs btn-outline-danger' type='submit' ><i class='fa fa-trash'></i></button>
@@ -43,6 +45,11 @@
         </tbody>             
       </table>
     </div>
+    {{-- @if ($classes->hasPages())
+    <div class="card-footer">
+      {!! $classes->links("pagination::bootstrap-4") !!}            
+    </div>
+    @endif --}}
   </div>
 </section>
 @endsection

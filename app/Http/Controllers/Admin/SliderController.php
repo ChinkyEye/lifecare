@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Manager;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Category;
+use App\Slider;
 use Auth;
 use File;
 use Response;
 
-class CategoryController extends Controller
+class SliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('created_by', Auth::user()->id)->get();
-        return view('manager.category.index', compact('categories'));
+        $sliders = Slider::orderBy('id', 'DESC')->get();
+        // dd($sliders);
+        return view('admin.slider.index', compact('sliders'));
     }
 
     /**
@@ -29,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('manager.category.create');
+        return view('admin.slider.create');
     }
 
     /**
@@ -40,15 +41,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-         $this->validate($request, [
+      
+      $this->validate($request, [
             'name' => 'required',
             'image' => 'required'
              ]);
-
+         
         $uppdf = $request->file('image');
         if($uppdf != ""){
-            $destinationPath = 'images/category/';
-            // $destinationPath = 'images/category/'.$request->name;
+            $destinationPath = 'images/slider/';
+            // $destinationPath = 'images/slider/'.$request->name;
             $extension = $uppdf->getClientOriginalExtension();
             $fileName = md5(mt_rand()).'.'.$extension;
             $uppdf->move($destinationPath, $fileName);
@@ -57,7 +59,7 @@ class CategoryController extends Controller
         }else{
             $fileName = Null;
         }
-       $categories = Category::create([
+       $sliders = Slider::create([
             'name' => $request['name'],
             'image'=> $fileName,
             'is_active' => '1',
@@ -70,7 +72,7 @@ class CategoryController extends Controller
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
         );
-        return redirect()->route('manager.category.index')->with($pass)->withInput();
+        return redirect()->route('admin.slider.index')->with($pass)->withInput();  
     }
 
     /**
@@ -92,10 +94,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::find($id);
-        return view('manager.category.edit',compact('categories'));
-        
-
+         $sliders = Slider::find($id);
+        return view('admin.slider.edit',compact('sliders'));
     }
 
     /**
@@ -105,21 +105,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Slider $slider)
     {
-        $uppdf = $request->file('image');
-        $this->validate($request, [
+        //dd($slider);
+
+    $this->validate($request, [
           'name' => 'required',
         ]);
-        $categories= Category::find($id);
-
         $all_data = $request->all();
+        $uppdf = $request->file('image');
         if($uppdf != ""){
           $this->validate($request, [
             'image' => 'required|mimes:jpeg,jpg|max:1024',
           ]);
-          $destinationPath = 'images/category/';
-          $oldFilename = $destinationPath.'/'.$categories->image;
+          // $destinationPath = 'images/slider/'.$slider->name;
+          $destinationPath = 'images/slider/';
+          $oldFilename = $destinationPath.'/'.$slider->image;
 
           $extension = $uppdf->getClientOriginalExtension();
           $fileName = md5(mt_rand()).'.'.$extension;
@@ -131,12 +132,13 @@ class CategoryController extends Controller
           }
         }
         $all_data['updated_by'] = Auth::user()->id;
-        $categories->update($all_data);
+        $slider->update($all_data);
+        $slider->update();
         $pass = array(
             'message' => 'Data updated successfully!',
             'alert-type' => 'success'
         );
-        return redirect()->route('manager.category.index')->with($pass);
+        return redirect()->route('admin.slider.index')->with($pass);
     }
 
     /**
@@ -147,31 +149,32 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories = Category::find($id);
-        $destinationPath = 'images/category/';
-        $oldFilename = $destinationPath.'/'.$categories->image;
-        if($categories->delete()){
+        $sliders = Slider::find($id);
+
+        $destinationPath = 'images/slider/';
+        $oldFilename = $destinationPath.'/'.$sliders->image;
+
+        if($sliders->delete()){
             if(File::exists($oldFilename)) {
                 File::delete($oldFilename);
                 // File::deleteDirectory($destinationPath);
             }
             $notification = array(
-              'message' => $categories->name.' is deleted successfully!',
+              'message' => $sliders->name.' is deleted successfully!',
               'status' => 'success'
           );
         }else{
             $notification = array(
-              'message' => $categories->name.' could not be deleted!',
+              'message' => $sliders->name.' could not be deleted!',
               'status' => 'error'
           );
         }
         return Response::json($notification);
     }
-
-    public function isActive(Request $request,$id)
+     public function isActive(Request $request,$id)
     {
-        $get_is_active = Category::where('id',$id)->value('is_active');
-        $isactive = Category::find($id);
+        $get_is_active = Slider::where('id',$id)->value('is_active');
+        $isactive = Slider::find($id);
         if($get_is_active == 0){
         $isactive->is_active = 1;
         $notification = array(

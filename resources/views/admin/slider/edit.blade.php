@@ -1,6 +1,6 @@
-@extends('manager.main.main')
+@extends('admin.main.main')
 @section('content')
-<?php $page = substr((Route::currentRouteName()), 8, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
+<?php $page = substr((Route::currentRouteName()), 6, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -18,7 +18,7 @@
 </section>
 <section class="content">
   <div class="card">
-    <form role="form" method="POST" action="{{ route('manager.slider.update',$sliders->id)}}" enctype="multipart/form-data">
+    <form role="form" method="POST" action="{{ route('admin.slider.update',$sliders->id)}}" enctype="multipart/form-data">
        @method('PATCH')
        @csrf
       <div class="modal-body" >
@@ -32,7 +32,7 @@
             <div class="input-group">
               <input type="file" class="form-control d-none" id="image" name="image"  value="{{$sliders->image}}" >
               <img src="{{URL::to('/')}}/images/slider/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />
-              <!-- <img src="{{URL::to('/')}}/images/slider/{{$sliders->name}}/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  /> -->
+              {{-- <img src="{{URL::to('/')}}/images/slider/{{$sliders->name}}/{{$sliders->image}}" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  /> --}}
             </div>
             @error('image')
             <span class="text-danger font-italic" role="alert">
