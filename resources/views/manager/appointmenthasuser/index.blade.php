@@ -31,7 +31,7 @@
               </a>
             </td>
             <td>
-              
+               <a href="{{ route('manager.appointmenthasuser.show', $data->id) }}" class="btn btn-xs btn-outline-info" title="view"><i class="fas fa-eye"></i></a>
             </td>
 
           </tr>

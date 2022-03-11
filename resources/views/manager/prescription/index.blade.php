@@ -44,6 +44,7 @@
         </tbody>             
       </table>
     </div>
+    {!! $prescriptions->links() !!}
   </div>
 </section>
 @endsection

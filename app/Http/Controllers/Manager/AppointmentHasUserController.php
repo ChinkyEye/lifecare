@@ -51,7 +51,8 @@ class AppointmentHasUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $appointments = AppointmentHasUser::find($id);
+        return view('manager.appointmenthasuser.show', compact('appointments'));
     }
 
     /**

@@ -21,7 +21,7 @@ class PrescriptionController extends Controller
     {
         $prescriptions = Prescription::orderBy('id','DESC')
                             ->with('getHospital')
-                            ->get();
+                            ->paginate(100);
 
        return view('manager.prescription.index',compact('prescriptions'));
     }
@@ -74,9 +74,11 @@ class PrescriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Prescription $id)
+    public function show($id)
     {
+        // dd($id);
         $prescriptions = Prescription::find($id);
+        // dd($prescriptions);
       return view('manager.prescription.show',compact('prescriptions'));
 	}
     /**
