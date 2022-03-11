@@ -23,6 +23,9 @@ Route::prefix('api/user')->group(function () {
 
 Route::get('slide', 'Api\SliderController@index'); //slider 
 
+Route::post('register', 'Api\HomeController@register');
+
+
 });
 
 
