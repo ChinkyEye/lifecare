@@ -1,9 +1,12 @@
 @extends('manager.main.main')
+@push('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+@endpush
 @section('content')
 <?php $page = substr((Route::currentRouteName()), 8, strpos(str_replace('manager.','',Route::currentRouteName()), ".")); ?>
 <section class="content-header">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row mb-2">
       <div class="col-sm-6 pl-1">
         <h3 class="text-capitalize">Dr.<small> {{$doctors->name}}</small></h3>
       </div>
@@ -17,39 +20,29 @@
   </div>
 </section>
 <section class="content">
-  <a href="{{ route('manager.doctorhasday.create',$doctors->id)}}" class="btn btn-sm btn-info text-capitalize rounded-0">Add Doctor's Schedule </a>
   <div class="card">
     <div class="table-responsive">
       <table class="table table-bordered table-hover m-0 w-100 table-sm">
-        <thead class="bg-dark">
+        <thead class="bg-light">
           <tr class="text-center">
             <th width="10">SN</th>
-            <th class="text-left">Working Days</th>
             <th>Available Time</th>
             <th>Status</th>
           </tr>
         </thead> 
         <tbody>
-          @foreach($datas as $key => $data)
+          @foreach($doctorhasdaytime as $key => $data)
           <tr class="text-center">
             <td>{{$key + 1}}</td>
-            <td class="text-left">{{$data->getDayName->name}}</td>
+            <td>{{$data->from_time}} - {{$data->to_time}}</td>
             <td>
-              @foreach($data->getDoctorDayTime as $key => $daytime)
-              {{$daytime->from_time}} - {{$daytime->to_time}}
-
-              <form action='javascript:void(0)' data_url="{{route('manager.doctorhasdaytime.destroy',$daytime->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
+              <a href="{{ route('manager.doctorhasdaytime.edit',$data->id) }}" class="btn btn-xs btn-outline-info" title="Change Time Period"><i class="fa-solid fa-edit"></i></a>
+              <form action='javascript:void(0)' data_url="{{route('manager.doctorhasdaytime.destroy',$data->id)}}" method='post' class='d-inline-block'  data-placement='top' title='Permanent Delete' onclick='myFunction(this)'>
                 <input type='hidden' name='_token' value='".csrf_token()."'>
                 <input name='_method' type='hidden' value='DELETE'>
-                <button class='btn btn-xs btn-outline-danger' type='submit' ><i class="fas fa-times text-danger"></i></a></button>
-              </form>  ,
-              {{-- <a href="javascript:void(0)" title="Click to Cancel Booking" onclick="myFunction({{$daytime->id}})"><i class="fas fa-times text-danger"></i></a>, --}}
-              @endforeach
+                <button class='btn btn-xs btn-outline-danger' type='submit' ><i class='fa fa-trash'></i></a></button>
+              </form> 
             </td>
-            <td>
-              <a href="{{ route('manager.doctorhasday.edit',$data->id) }}" class="btn btn-xs btn-outline-info" title="Edit Day"><i class="fas fa-edit"></i></a>
-              <a href="{{ route('manager.doctorhasdaytime.index',$data->id) }}" class="btn btn-xs btn-outline-info" title="Change Time Period"><i class="fa-solid fa-clock"></i></a>
-            </td> 
           </tr>
           @endforeach
         </tbody>             
@@ -59,6 +52,34 @@
 </section>
 @endsection
 @push('javascript')
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#profile-img-tag').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  $("#image").change(function(){
+    readURL(this);
+  });
+</script>
+
+<script>
+    $('#from_time').datetimepicker({
+      format: 'LT'
+    })
+</script>
+<script>
+    $('#to_time').datetimepicker({
+      format: 'LT'
+    })
+</script>
 <script>
   function myFunction(el) {
     // alert(el);

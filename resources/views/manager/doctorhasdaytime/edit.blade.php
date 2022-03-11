@@ -21,32 +21,17 @@
 </section>
 <section class="content">
   <div class="card card-info">
-    <form role="form" method="POST" action="{{route('manager.doctorhasday.store')}}">
+    <form role="form" method="POST" action="{{route('manager.doctorhasdaytime.update',$doctorhasdaytime->id)}}">
       <div class="card-body">
         @csrf
-        <input type="hidden" name="doctor_id" id="doctor_id" value="{{$doctors->id}}">
-        <div class="form-group">
-          <label for="day_id" class="control-label">Day <span class="text-danger">*</span></label>
-          <select class="form-control" name="day_id" id="day_id">
-            <option value="">Select Day</option>
-            @foreach ($days as $key => $day)
-            <option value="{{ $day->id }}" {{ old('hospital_id') == $day->id ? 'selected' : ''}}>
-              {{$day->name}}
-            </option>
-            @endforeach
-          </select>
-          @error('day_id')
-          <span class="text-danger font-italic" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
-        </div>
+        @method('PATCH')
+        <input type="hidden" name="doctorhasday_id" id="doctorhasday_id" value="{{$doctorhasday_id}}">
         <div class="row">
           <div class="bootstrap-timepicker col-md-6">
             <div class="form-group">
-              <label for="from_time">From Time:<span class="text-danger">*</span></label>
+              <label for="from_time">From Time:</label>
               <div class="input-group date" id="from_time" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#from_time" name="from_time" value="{{ old('from_time') }}">
+                <input type="text" class="form-control datetimepicker-input" data-target="#from_time" name="from_time" value="{{$doctorhasdaytime->from_time}}">
                 <div class="input-group-append" data-target="#from_time" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="far fa-clock"></i></div>
                 </div>
@@ -60,9 +45,9 @@
           </div>
           <div class="bootstrap-timepicker col-md-6">
             <div class="form-group">
-              <label for="to_time">To Time:<span class="text-danger">*</span></label>
+              <label for="to_time">To Time:</label>
               <div class="input-group date" id="to_time" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time" value="{{ old('to_time') }}">
+                <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time" value="{{$doctorhasdaytime->to_time}}">
                 <div class="input-group-append" data-target="#to_time" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="far fa-clock"></i></div>
                 </div>
@@ -77,7 +62,7 @@
         </div>
       </div>
       <div class="card-footer justify-content-between">
-        <button type="submit" class="btn btn-info text-capitalize">Save</button>
+        <button type="submit" class="btn btn-info text-capitalize">Update</button>
       </div>
     </form>
   </div>
