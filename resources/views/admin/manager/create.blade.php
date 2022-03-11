@@ -66,6 +66,15 @@
           </span>
           @enderror
         </div>
+        {{-- <div class="form-group">
+          <label for="imgInp">Student Image</label>
+          <div class="input-group">
+            <img id="blah" src="{{URL::to('/')}}/image/80x80.png" onclick="document.getElementById('imgInp').click();" alt="your image" class="img-thumbnail" style="width: 175px;height: 140px"/>
+            <div class="input-group my-3">
+             <input type='file' class="d-none" id="imgInp" name="image" />
+           </div>
+         </div>
+       </div> --}}
         
       </div>
       <div class="card-footer justify-content-between">
@@ -112,6 +121,24 @@ function myFunction(inputtxt) {
   }
   alert("You pressed a key inside the input field");
 }
+</script>
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imgInp").change(function() {
+    alert("hi");
+    readURL(this);
+  });
 </script>
 
 @endpush

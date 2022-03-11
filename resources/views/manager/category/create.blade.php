@@ -22,7 +22,7 @@
       <div class="card-body">
         @csrf
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text"  class="form-control max" id="name" placeholder="Enter name" name="name" autocomplete="off" autofocus value="{{ old('name') }}">
           @error('name')
           <span class="text-danger font-italic" role="alert">
@@ -32,7 +32,7 @@
         </div>
        
         <div class="form-group">
-          <label for="image">Choose Image</label>
+          <label for="image">Choose Image<span class="text-danger">*</span></label>
           <div class="input-group">
             <input type="file" class="form-control d-none" id="image" name="image" value="{{ old('image') }}">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl1xtOkMGh312RKiJXUPbwyODQ7hdHgHFqYR5RwBGHiKaKz9eO&s" id="profile-img-tag" width="200px" onclick="document.getElementById('image').click();" alt="your image" class="img-thumbnail img-fluid editback-gallery-img center-block"  />
@@ -43,6 +43,15 @@
             @enderror
           </div>
         </div>
+        {{-- <div class="form-group">
+          <label for="imgInp">Student Image</label>
+          <div class="input-group">
+            <img id="blah" src="{{URL::to('/')}}/image/80x80.png" onclick="document.getElementById('imgInp').click();" alt="your image" class="img-thumbnail" style="width: 175px;height: 140px"/>
+            <div class="input-group my-3">
+             <input type='file' class="d-none" id="imgInp" name="image" />
+           </div>
+         </div>
+       </div> --}}
         
       </div>
       <div class="card-footer justify-content-between">
@@ -64,8 +73,24 @@
     }
   }
   $("#image").change(function(){
-    // alert("milan");
     readURL(this);
   });
 </script>
+{{-- <script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imgInp").change(function() {
+    readURL(this);
+  });
+</script> --}}
 @endpush

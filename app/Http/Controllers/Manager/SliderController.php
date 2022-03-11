@@ -18,7 +18,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::get();
+        $sliders = Slider::where('created_by', Auth::user()->id)->get();
         return view('manager.slider.index', compact('sliders'));
     }
 
@@ -40,6 +40,11 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate($request, [
+            'name' => 'required',
+            'image' => 'required'
+             ]);
+         
         $uppdf = $request->file('image');
         if($uppdf != ""){
             $destinationPath = 'images/slider/';
@@ -61,11 +66,9 @@ class SliderController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
-          'message' => 'Data added successfully!',
-          'alert-type' => 'success'
-        );
-        return redirect()->route('manager.slider.index')->with($pass)->withInput();
+       
+        return redirect()->route('manager.slider.index')->with('success', 'Slider added successfully.');
+    
     }
 
     /**

@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::where('created_by', Auth::user()->id)->paginate(100);
         return view('manager.category.index', compact('categories'));
     }
 
@@ -40,6 +40,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate($request, [
+            'name' => 'required',
+            'image' => 'required'
+             ]);
+
         $uppdf = $request->file('image');
         if($uppdf != ""){
             $destinationPath = 'images/category/';
@@ -61,11 +66,11 @@ class CategoryController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
+        /*$pass = array(
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
-        );
-        return redirect()->route('manager.category.index')->with($pass)->withInput();
+        );*/
+        return redirect()->route('manager.category.index')->with('success', 'Category added successfully.');
     }
 
     /**

@@ -90,7 +90,8 @@ class ManagerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::find($id);
+        return view('admin.manager.edit', compact('users'));
     }
 
     /**
@@ -102,7 +103,20 @@ class ManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+          'name' => 'required',
+        ]);
+        $users= User::find($id);
+
+        $all_data = $request->all();
+        // dd($all_data);
+        $all_data['updated_by'] = Auth::user()->id;
+        $users->update($all_data);
+        $pass = array(
+            'message' => 'Data updated successfully!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('admin.manager.index')->with($pass);
     }
 
     /**

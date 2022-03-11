@@ -25,6 +25,22 @@
       <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-item">
+          <a href="{{ route('manager.address.index')}}" class="nav-link {{ (request()->is('manager/address*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-location-dot"></i>
+            <p>
+              Address
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.day.index')}}" class="nav-link {{ (request()->is('manager/day*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>
+              Days
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ route('manager.slider.index')}}" class="nav-link {{ (request()->is('manager/slider*')) ? 'active' : '' }}">
             <i class="nav-icon fas fa-calendar-alt"></i>
             <p>
@@ -38,6 +54,46 @@
             <i class="nav-icon fas fa-calendar-alt"></i>
             <p>
               Category
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.specialist.index')}}" class="nav-link {{ (request()->is('manager/specialist*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              Specialist
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.hospital.index')}}" class="nav-link {{ (request()->is('manager/hospital*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-house-medical"></i>
+            <p>
+              Hospital
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.doctor.index')}}" class="nav-link {{ (request()->is('manager/doctor*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user-md"></i>
+            <p>
+              Doctor
+            </p>
+          </a>
+        </li> 
+         <li class="nav-item">
+          <a href="{{route('manager.prescription.index')}}" class="nav-link {{ (request()->is('manager/prescription*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>
+             Prescriptions
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.appointmenthasuser.index')}}" class="nav-link {{ (request()->is('manager/appointmenthasuser*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-calendar-plus"></i>
+            <p>
+              Appointment Status
             </p>
           </a>
         </li>
