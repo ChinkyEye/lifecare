@@ -66,11 +66,9 @@ class SliderController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
-          'message' => 'Data added successfully!',
-          'alert-type' => 'success'
-        );
-        return redirect()->route('admin.slider.index')->with($pass)->withInput();
+       
+        return redirect()->route('manager.slider.index')->with('success', 'Slider added successfully.');
+    
     }
 
     /**

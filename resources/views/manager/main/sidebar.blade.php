@@ -80,6 +80,14 @@
               Doctor
             </p>
           </a>
+        </li> 
+         <li class="nav-item">
+          <a href="{{route('manager.prescription.index')}}" class="nav-link {{ (request()->is('manager/prescription*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>
+             Prescriptions
+            </p>
+          </a>
         </li>
         <li class="nav-item">
           <a href="{{ route('manager.appointmenthasuser.index')}}" class="nav-link {{ (request()->is('manager/appointmenthasuser*')) ? 'active' : '' }}">

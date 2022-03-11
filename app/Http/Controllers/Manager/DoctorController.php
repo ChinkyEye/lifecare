@@ -87,10 +87,10 @@ class DoctorController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        // $pass = array(
-        //   'message' => 'Data added successfully!',
-        //   'alert-type' => 'success'
-        // );
+        /*$pass = array(
+          'message' => 'Data added successfully!',
+          'alert-type' => 'success'
+        );*/
         // return redirect()->route('manager.doctor.index')->with($pass)->withInput();
         return redirect()->route('manager.doctor.index')->with('success', 'Doctor added successfully.');
     }
@@ -177,7 +177,7 @@ class DoctorController extends Controller
         if($doctors->delete()){
             if(File::exists($oldFilename)) {
                 File::delete($oldFilename);
-                // File::deleteDirectory($destinationPath);
+             /*   File::deleteDirectory($destinationPath);*/
             }
             $notification = array(
               'message' => $doctors->name.' is deleted successfully!',

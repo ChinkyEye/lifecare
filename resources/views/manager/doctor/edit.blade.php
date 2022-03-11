@@ -136,7 +136,11 @@
         
       </div>
       <div class="card-footer justify-content-between">
+<<<<<<< HEAD
         <button type="submit" class="btn btn-info text-capitalize">Update</button>
+=======
+        <button type="submit" class="btn btn-info text-capitalize">UPDATE</button>
+>>>>>>> origin/master
       </div>
     </form>
   </div>

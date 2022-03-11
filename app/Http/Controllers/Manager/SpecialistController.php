@@ -145,7 +145,7 @@ class SpecialistController extends Controller
     public function destroy($id)
     {
         $specialists = Specialist::find($id);
-        $destinationPath = 'images/category/';
+        $destinationPath = 'images/specialist/';
         $oldFilename = $destinationPath.'/'.$specialists->image;
         if($specialists->delete()){
             if(File::exists($oldFilename)) {
