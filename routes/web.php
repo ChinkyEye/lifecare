@@ -63,11 +63,11 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::resource('/doctor','DoctorController');
     Route::get('doctor/active/{id}', 'DoctorController@isActive')->name('doctor.active');
 
-<<<<<<< HEAD
+
     Route::resource('/prescription', 'PrescriptionController');
     Route::get('prescription/show/{id}', 'PrescriptionController@detail');
     Route::get('prescription/active/{id}', 'PrescriptionController@isActive')->name('prescription.active');
-=======
+
     Route::resource('/doctorhasday','DoctorHasDayController');
     Route::get('/doctor/doctorhasday/{id}','DoctorHasDayController@index')->name('doctorhasday.index');
     Route::get('/doctor/doctorhasday/create/{id}','DoctorHasDayController@create')->name('doctorhasday.create');
@@ -76,6 +76,6 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::get('/doctor/doctorhasdaytime/{id}','DoctorHasDayTimeController@index')->name('doctorhasdaytime.index');
 
 
->>>>>>> origin/master
+
 
 });
