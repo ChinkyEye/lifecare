@@ -22,7 +22,7 @@
 <section class="content">
   <div class="card card-info">
     <form role="form" method="POST" action="{{route('manager.doctorhasday.store')}}">
-      <div class="card-body">
+      <div class="card-body" {{-- id="dynamicAddRemove" --}} id="entry-table">
         @csrf
         <input type="hidden" name="doctor_id" id="doctor_id" value="{{$doctors->id}}">
         <div class="form-group">
@@ -41,12 +41,12 @@
           </span>
           @enderror
         </div>
-        <div class="row">
+        <div class="row" id="main-entry">
           <div class="bootstrap-timepicker col-md-6">
             <div class="form-group">
               <label for="from_time">From Time:<span class="text-danger">*</span></label>
               <div class="input-group date" id="from_time" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#from_time" name="from_time" value="{{ old('from_time') }}">
+                <input type="text" class="form-control datetimepicker-input lol" data-target="#from_time" name="from_time[]" value="{{ old('from_time') }}">
                 <div class="input-group-append" data-target="#from_time" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="far fa-clock"></i></div>
                 </div>
@@ -58,11 +58,11 @@
               @enderror
             </div>
           </div>
-          <div class="bootstrap-timepicker col-md-6">
+          <div class="bootstrap-timepicker col-md-5">
             <div class="form-group">
               <label for="to_time">To Time:<span class="text-danger">*</span></label>
               <div class="input-group date" id="to_time" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time" value="{{ old('to_time') }}">
+                <input type="text" class="form-control datetimepicker-input" data-target="#to_time" name="to_time[]" value="{{ old('to_time') }}">
                 <div class="input-group-append" data-target="#to_time" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="far fa-clock"></i></div>
                 </div>
@@ -73,6 +73,10 @@
               </span>
               @enderror
             </div>
+          </div>
+          <div class="col-md-1 d-flex justify-content-md-center align-items-center w-100">
+              <button type="button" name="add" id="add_more" class="btn btn-xs btn-outline-primary"><i class="fas fa-plus"></i></button>
+              {{-- <button type="button" name="add" id="dynamic-ar" class="btn btn-xs btn-outline-primary"><i class="fas fa-plus"></i></button> --}}
           </div>
         </div>
       </div>
@@ -111,5 +115,36 @@
     $('#to_time').datetimepicker({
       format: 'LT'
     })
+</script>
+{{-- <script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
+            '][subject]" placeholder="Enter subject" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+</script> --}}
+<script type="text/javascript">
+    var max_fields      = 14; 
+    var x = 0;
+    var wrapper         = $("#entry-table"); 
+    $("body").on("click", "#add_more", function(event){
+        if(x < max_fields){
+            x++;
+            var $cloned = $("#main-entry:first").clone();
+            $cloned.append('<a href="javascript:void(0)" class="remove_field btn btn-danger btn-sm"><i class="mdi mdi-close" aria-hidden="true"></i></a>');
+            wrapper.append($cloned);
+        }
+        else
+            alertify.alert("only max 15 entries");
+    });
+    wrapper.on("click",".remove_field", function(e){
+        e.preventDefault(); $(this).parent('div').remove(); 
+        x--;
+    });
 </script>
 @endpush

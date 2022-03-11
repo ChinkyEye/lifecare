@@ -81,6 +81,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.appointmenthasuser.index')}}" class="nav-link {{ (request()->is('manager/appointmenthasuser*')) ? 'active' : '' }}">
+            <i class="nav-icon fa-solid fa-calendar-plus"></i>
+            <p>
+              Appointment Status
+            </p>
+          </a>
+        </li>
         
       </ul>
     </nav>

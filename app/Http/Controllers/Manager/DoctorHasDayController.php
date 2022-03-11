@@ -47,6 +47,8 @@ class DoctorHasDayController extends Controller
      */
     public function store(Request $request)
     {
+        $from_time = $request->from_time;
+        $to_time = $request->to_time;
         $this->validate($request, [
           'day_id' => 'required',
           'from_time' => 'required',
@@ -65,31 +67,37 @@ class DoctorHasDayController extends Controller
                 'time' => date("H:i:s"),
                 'created_by' => Auth::user()->id,
             ]);
-            $doctorhasdaytime = DoctorHasDayTime::create([
-                'doctor_has_day_id'=> $doctorhasday->id,
-                'from_time'=> $request['from_time'],
-                'to_time'=> $request['to_time'],
-                'is_active' => '1',
-                'date' => date("Y-m-d"),
-                'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
-                'time' => date("H:i:s"),
-                'created_by' => Auth::user()->id,
-            ]);
+            foreach($from_time as $key => $value ){
+                $doctorhasdaytime = DoctorHasDayTime::create([
+                    'doctor_has_day_id'=> $doctorhasday->id,
+                    // 'from_time'=> $request['from_time'],
+                    // 'to_time'=> $request['to_time'],
+                    'from_time'=> $value,
+                    'to_time'=> $to_time[$key],
+                    'is_active' => '1',
+                    'date' => date("Y-m-d"),
+                    'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
+                    'time' => date("H:i:s"),
+                    'created_by' => Auth::user()->id,
+                ]);
+            }
             return redirect()->route('manager.doctorhasday.index',$request->doctor_id)->with('success', 'Data added successfully.');
         }else{
             $doctor_has_day_id = DoctorHasDay::where('doctor_id',$request->doctor_id)
                                 ->where('day_id',$request->day_id)
                                 ->value('id');
-            $doctorhasdaytime = DoctorHasDayTime::create([
-                'doctor_has_day_id'=> $doctor_has_day_id,
-                'from_time'=> $request['from_time'],
-                'to_time'=> $request['to_time'],
-                'is_active' => '1',
-                'date' => date("Y-m-d"),
-                'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
-                'time' => date("H:i:s"),
-                'created_by' => Auth::user()->id,
-            ]);
+            foreach($from_time as $key => $value ){                    
+                $doctorhasdaytime = DoctorHasDayTime::create([
+                    'doctor_has_day_id'=> $doctor_has_day_id,
+                    'from_time'=> $value,
+                    'to_time'=> $to_time[$key],
+                    'is_active' => '1',
+                    'date' => date("Y-m-d"),
+                    'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
+                    'time' => date("H:i:s"),
+                    'created_by' => Auth::user()->id,
+                ]);
+            }
             return redirect()->route('manager.doctorhasday.index',$request->doctor_id)->with('success', 'Data added successfully.');
 
 
