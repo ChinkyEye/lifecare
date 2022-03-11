@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Prescription;
+use App\Hospital;
+use App\User;
+use Auth;
+use Response;
 
 class PrescriptionController extends Controller
 {
@@ -14,7 +19,11 @@ class PrescriptionController extends Controller
      */
     public function index()
     {
-        //
+        $prescriptions = Prescription::orderBy('id','DESC')
+                            ->with('getHospital')
+                            ->get();
+
+       return view('manager.prescription.index',compact('prescriptions'));
     }
 
     /**
@@ -24,7 +33,8 @@ class PrescriptionController extends Controller
      */
     public function create()
     {
-        //
+       //  $doctors = Doctor::where('created_by', Auth::user()->id)->get();
+       // return view('manager.prescription.create',compact('doctors') );
     }
 
     /**
@@ -35,7 +45,27 @@ class PrescriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // $this->validate($request, [
+        //     'doctor_id' => 'required',
+        //     'clinical_note' => 'required',
+        //     'examination_mse' => 'required',
+        //      ]);
+      
+        // $file= Prescription::create([
+              
+        //         'doctor_id' => $request['doctor_id'],
+        //         'examination_mse' => $request['examination_mse'],
+        //         'clinical_note' => $request['clinical_note'],
+        //         'is_active' => '1',
+        //         'date' => date("Y-m-d"),
+        //         'date_np' => $this->helper->date_np_con_parm(date("Y-m-d")),
+        //         'time' => date("H:i:s"),
+        //         'created_by' => Auth::user()->id,       
+                            
+        // ]);
+        // return redirect()->route('manager.prescription.index')->with('success', 'prescription added successfully.');
+       
     }
 
     /**
@@ -44,11 +74,11 @@ class PrescriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Prescription $id)
     {
-        //
-    }
-
+        $prescriptions = Prescription::find($id);
+      return view('manager.prescription.show',compact('prescriptions'));
+	}
     /**
      * Show the form for editing the specified resource.
      *
@@ -57,7 +87,9 @@ class PrescriptionController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $prescriptions = Prescription::find($id);
+        // $doctors = Doctor::where('created_by', Auth::user()->id)->get();
+        // return view('manager.prescription.edit', compact('prescriptions', 'doctors'));
     }
 
     /**
@@ -69,7 +101,16 @@ class PrescriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $this->validate($request, [
+        //     'doctor_id' => 'required',
+        //     'clinical_note' => 'required',
+        //     'examination_mse' => 'required',
+        //      ]);
+        //  $prescriptions= Prescription::find($id);
+        // $all_data = $request->all();
+        // $all_data['updated_by'] = Auth::user()->id;
+        // $prescriptions->update($all_data);
+        //  return redirect()->route('manager.prescription.index')->with('success', 'Data updated successfully.');
     }
 
     /**
@@ -80,6 +121,46 @@ class PrescriptionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  $hospitals = Prescription::find($id);
+        // if($hospitals->delete()){
+        //     $notification = array(
+        //       'message' => $hospitals->name.' is deleted successfully!',
+        //       'status' => 'success'
+        //   );
+        // }else{
+        //     $notification = array(
+        //       'message' => $hospitals->name.' could not be deleted!',
+        //       'status' => 'error'
+        //   );
+        // }
+        // return Response::json($notification);
     }
-}
+
+     public function isActive(Request $request,$id)
+    {
+        $get_is_active = Prescription::where('id',$id)->value('is_active');
+        $isactive = Prescription::find($id);
+        if($get_is_active == 0){
+        $isactive->is_active = 1;
+        $notification = array(
+          'message' => $isactive->name.' is Active!',
+          'alert-type' => 'success'
+        );
+        }
+        else {
+        $isactive->is_active = 0;
+        $notification = array(
+          'message' => $isactive->name.' is inactive!',
+          'alert-type' => 'error'
+        );
+        }
+        if(!($isactive->update())){
+        $notification = array(
+          'message' => $isactive->name.' could not be changed!',
+          'alert-type' => 'error'
+        );
+        }
+        return back()->with($notification)->withInput();
+    }
+   }
+

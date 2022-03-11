@@ -51,11 +51,12 @@ class DayController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
+       /* $pass = array(
             'message' => 'Data added successfully!',
             'alert-type' => 'success'
-        );
-        return redirect()->route('manager.day.index')->with($pass)->withInput();
+        );*/
+        return redirect()->route('manager.day.index')->with('success', 'Day added successfully.');
+    
     }
 
     /**

@@ -51,11 +51,12 @@ class AddressController extends Controller
             'time' => date("H:i:s"),
             'created_by' => Auth::user()->id,
         ]);
-        $pass = array(
+        /*$pass = array(
           'message' => 'Data added successfully!',
           'alert-type' => 'success'
-        );
-        return redirect()->route('manager.address.index')->with($pass)->withInput();
+        );*/
+        return redirect()->route('manager.address.index')->with('success', 'Address added successfully.');
+    
     }
 
     /**
@@ -119,9 +120,6 @@ class AddressController extends Controller
     public function destroy($id)
     {
         $address = Address::find($id);
-
-        $destinationPath = 'images/slider/';
-        $oldFilename = $destinationPath.'/'.$address->image;
 
         if($address->delete()){
             $notification = array(
