@@ -19,7 +19,7 @@ class SpecialistController extends Controller
      */
     public function index()
     {
-        $specialists = Specialist::where('created_by',Auth::user()->id)->get();
+        $specialists = Specialist::where('created_by',Auth::user()->id)->paginate(100);
         return view('manager.specialist.index', compact('specialists'));
     }
 

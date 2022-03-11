@@ -44,6 +44,7 @@
         </tbody>             
       </table>
     </div>
+    {!! $specialists->links() !!}
   </div>
 </section>
 @endsection

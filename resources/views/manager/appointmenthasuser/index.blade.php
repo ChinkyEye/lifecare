@@ -19,16 +19,27 @@
         </thead> 
         <tbody>
           @foreach($datas as $key => $data)
-          <tr class="text-center">
+          <tr class="text-center {{$data->is_active == 1 ? '' : 'bg-light-danger'}}">
             <td>{{$key + 1}}</td>
             <td>{{$data->getAppointmentUser->name}}</td>
             <td>{{$data->getDoctor->name}}</td>
+            <td>{{$data->getAppointmentDay->getDayName->name}}</td>
+            <td>{{$data->getAppointmentDayTime->from_time}} - {{$data->getAppointmentDayTime->to_time}}</td>
+            <td>
+              <a href="{{ route('manager.appointmenthasuser.active',$data->id) }}" data-placement="top" title="{{ $data->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
+                <i class="nav-icon fas {{ $data->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
+              </a>
+            </td>
+            <td>
+              
+            </td>
 
           </tr>
           @endforeach
         </tbody>             
       </table>
     </div>
+    {!! $datas->links() !!}
   </div>
 </section>
 @endsection

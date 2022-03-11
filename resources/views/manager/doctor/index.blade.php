@@ -43,6 +43,7 @@
         </tbody>             
       </table>
     </div>
+      {!! $doctors->links() !!}
   </div>
 </section>
 @endsection

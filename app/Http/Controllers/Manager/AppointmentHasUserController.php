@@ -18,7 +18,7 @@ class AppointmentHasUserController extends Controller
     {
         $datas = AppointmentHasUser::orderBy('id','ASC')
                                     ->with('getAppointmentUser','getDoctor')
-                                    ->get();
+                                    ->paginate(100);
         return view('manager.appointmenthasuser.index', compact('datas'));
     }
 
@@ -86,5 +86,32 @@ class AppointmentHasUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function isActive(Request $request,$id)
+    {
+        $get_is_active = AppointmentHasUser::where('id',$id)->value('is_active');
+        $isactive = AppointmentHasUser::find($id);
+        if($get_is_active == 0){
+        $isactive->is_active = 1;
+        $notification = array(
+            'message' => 'data is Active!',
+            'alert-type' => 'success'
+        );
+        }
+        else {
+        $isactive->is_active = 0;
+        $notification = array(
+          'message' =>'data is inactive!',
+          'alert-type' => 'error'
+        );
+        }
+        if(!($isactive->update())){
+        $notification = array(
+          'message' => $isactive->name.' could not be changed!',
+          'alert-type' => 'error'
+        );
+        }
+        return back()->with($notification)->withInput();
     }
 }

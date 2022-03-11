@@ -76,6 +76,7 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
     Route::get('/doctor/doctorhasdaytime/{id}','DoctorHasDayTimeController@index')->name('doctorhasdaytime.index');
 
     Route::get('appointmenthasuser', 'AppointmentHasUserController@index')->name('appointmenthasuser.index');
+    Route::get('appointmenthasuser/active/{id}', 'AppointmentHasUserController@isActive')->name('appointmenthasuser.active');
 
 
 

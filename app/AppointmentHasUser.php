@@ -22,5 +22,13 @@ class AppointmentHasUser extends Model
     public function getDoctor()
     {
         return $this->belongsTo('App\Doctor','doctor_id','id');
+    } 
+    public function getAppointmentDay()
+    {
+        return $this->belongsTo('App\DoctorHasDay','doctor_has_day_id','id');
+    }
+    public function getAppointmentDayTime()
+    {
+        return $this->belongsTo('App\DoctorHasDayTime','doctor_has_day_time_id','id');
     }
 }

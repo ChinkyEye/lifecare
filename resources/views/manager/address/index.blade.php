@@ -40,6 +40,7 @@
         </tbody>             
       </table>
     </div>
+    {!! $datas->links() !!}
   </div>
 </section>
 @endsection

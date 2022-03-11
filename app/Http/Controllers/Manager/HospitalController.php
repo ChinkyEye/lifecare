@@ -20,7 +20,7 @@ class HospitalController extends Controller
     {
         $hospitals = Hospital::where('created_by', Auth::user()->id)
                                 ->with('getHospitalAddress')
-                                ->get();
+                                ->paginate(100);
         return view('manager.hospital.index', compact('hospitals'));
     }
 

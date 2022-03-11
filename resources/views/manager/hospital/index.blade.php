@@ -42,6 +42,7 @@
         </tbody>             
       </table>
     </div>
+      {!! $hospitals->links() !!}
   </div>
 </section>
 @endsection

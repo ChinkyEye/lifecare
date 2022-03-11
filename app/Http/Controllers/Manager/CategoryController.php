@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('created_by', Auth::user()->id)->get();
+        $categories = Category::where('created_by', Auth::user()->id)->paginate(100);
         return view('manager.category.index', compact('categories'));
     }
 

@@ -24,7 +24,7 @@ class DoctorController extends Controller
         $doctors = Doctor::orderBy('id','DESC')
                             ->where('created_by', Auth::user()->id)
                             ->with('getDoctorAddress')
-                            ->get();
+                            ->paginate(100);
         return view('manager.doctor.index', compact('doctors'));
     }
 
