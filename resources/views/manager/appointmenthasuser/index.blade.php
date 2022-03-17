@@ -26,14 +26,22 @@
             <td>{{$data->getAppointmentDay->getDayName->name}}</td>
             <td>{{$data->getAppointmentDayTime->from_time}} - {{$data->getAppointmentDayTime->to_time}}</td>
             <td>
-              <a href="{{ route('manager.appointmenthasuser.active',$data->id) }}" data-placement="top" title="{{ $data->is_active == '1' ? 'Click to deactivate' : 'Click to activate' }}">
-                <i class="nav-icon fas {{ $data->is_active == '1' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
+              <a href="{{ route('manager.appointmenthasuser.active',$data->id) }}" data-placement="top" title="{{ $data->is_active == '0' ? 'Click to deactivate' : 'Click to activate' }}">
+                <i class="nav-icon fas {{ $data->is_active == '0' ? 'fa-check-circle':'fa-times-circle text-danger'}}"></i>
+
               </a>
             </td>
             <td>
-               <a href="{{ route('manager.appointmenthasuser.show', $data->id) }}" class="btn btn-xs btn-outline-info" title="view"><i class="fas fa-eye"></i></a>
+                 @if($data->is_active == '0')
+                 <a href="{{ route('manager.appointmenthasuser.active',$data->id) }}" data-placement="top" title="{{ $data->is_active == '1' ? 'Click to deactivate' : 'Click to Reject' }}" class="btn btn-light">
+                  <i class="text-success"> ACCEPTED</i>
+                 </a>
+                 @else
+                  <a href="{{ route('manager.appointmenthasuser.active',$data->id) }}" data-placement="top" title="{{ $data->is_active == '0' ? 'Click to deactivate' : 'Click to Accept' }}" class="btn btn-light">
+                  <i class="text-danger"> REJECTED</i>
+                 </a>
+                @endif         
             </td>
-
           </tr>
           @endforeach
         </tbody>             

@@ -5,9 +5,39 @@
   
 </section>
 <section class="content">
-  
-
-  <div class="card">
+     <div class="container-fluid">
+      @if(session()->has('success'))
+      <div class="alert alert-success">
+        {{ session()->get('success') }}
+      </div>
+      @endif
+      <form  action="{{route('manager.prescription.search')}}" method ="POST">
+        @csrf
+        <br>
+        <div class="container">
+          <div class="row">
+            <div class="container-fluid">
+              <div class="form-group row">
+                <label for="date" class="col-form-label ">From</label>
+                <div class="col-sm-2">
+                  <input type="date" class="form-control input-sm col-sm-20" id="fromDate" name="fromDate" required/>
+                </div>
+                <label for="date" class="col-form-label">To</label>
+                <div class="col-sm-2">
+                  <input type="date" class="form-control input-sm col-sm-20" id="toDate" name="toDate" required/>
+                </div>
+                 <div class="col-sm-2">
+                  <button type="submit" class="btn" name="search" title="Search"><img src="https://img.icons8.com/android/24/000000/search.png"/></button>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </form>
+ <div class="card">
     <div class="table-responsive">
       <table class="table table-bordered table-hover m-0 w-100 table-sm">
         <thead class="bg-dark">

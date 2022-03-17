@@ -58,6 +58,19 @@
 			</div>
 		</div>
 	</div>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+ <script>
+        $(document).ready(function(){
+           $("#in").click(function(){
+                $("img").width($("img").width()+100);
+                $("img").height($("img").height()+100);
+           });
+           $("#out").click(function(){
+                $("img").width($("img").width()-100);
+                $("img").height($("img").height()-100);
+           });
+        });
+    </script> 
 </section> 
-</section>
+
 @endsection

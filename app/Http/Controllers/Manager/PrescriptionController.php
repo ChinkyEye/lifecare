@@ -9,6 +9,8 @@ use App\Hospital;
 use App\User;
 use Auth;
 use Response;
+use File;
+use DB;
 
 class PrescriptionController extends Controller
 {
@@ -164,5 +166,22 @@ class PrescriptionController extends Controller
         }
         return back()->with($notification)->withInput();
     }
+    public function search(Request $request)
+    {
+        $fromDate = $request->input('fromDate');
+        $toDate   = $request->input('toDate');
+      
+      if($fromDate < $toDate)
+      {
+        $query = Prescription::select()
+            ->where('date', '>=', $fromDate)
+            ->where('date', '<=', $toDate)
+            ->get();
+        return view('manager.prescription.search', compact('query'));
+
+      }
+         
+      }
+
    }
 

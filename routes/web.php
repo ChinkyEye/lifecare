@@ -68,6 +68,7 @@ Route::namespace('Manager')->prefix('manager')->name('manager.')->middleware(['m
 
 
     Route::resource('/prescription', 'PrescriptionController');
+    Route::post('prescription/search', 'PrescriptionController@search')->name('prescription.search');
     Route::get('prescription/show/{id}', 'PrescriptionController@detail');
     Route::get('prescription/active/{id}', 'PrescriptionController@isActive')->name('prescription.active');
 
