@@ -39,17 +39,19 @@
 							<div class="active tab-pane" id="activity">
 								<div class="post">
 									<div class="user-block">
-										
 										<h4>Prescription</h4>				
-										
 									</div>
 									<div class="row mb-3">
 										<div class="col-sm-12">
-											<img class="img-fluid" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg" alt="Photo">
+											<img class="img-fluid" id="panzoom" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg" alt="Photo">
 										</div>
-
-										
-									</div>							
+									</div>	
+									<div class="row mb-3">
+										<input type="range" class="zoom-range w-100">
+          <button class="zoom-in btn btn-block btn-outline-info">Zoom In</button>
+          <button class="zoom-out btn btn-block btn-outline-info">Zoom Out</button>
+          <button class="reset btn btn-block btn-outline-danger">Reset</button>
+									</div>						
 								</div>
 							</div>				
 						</div>
@@ -58,19 +60,16 @@
 			</div>
 		</div>
 	</div>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
- <script>
-        $(document).ready(function(){
-           $("#in").click(function(){
-                $("img").width($("img").width()+100);
-                $("img").height($("img").height()+100);
-           });
-           $("#out").click(function(){
-                $("img").width($("img").width()-100);
-                $("img").height($("img").height()-100);
-           });
-        });
-    </script> 
-</section> 
-
 @endsection
+@push('javascript')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.panzoom/2.0.6/jquery.panzoom.min.js"></script>
+  <script type="text/javascript">
+    $("#panzoom").panzoom({
+      $zoomIn: $(".zoom-in"),
+      $zoomOut: $(".zoom-out"),
+      $zoomRange: $(".zoom-range"),
+      $reset: $(".reset"),
+      contain: 'invert',
+    });
+  </script>
+@endpush
